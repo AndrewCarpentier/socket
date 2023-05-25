@@ -5,12 +5,10 @@ const bcrypt = require("bcrypt");
 router.post("/", async (req, res) => {
   const { email, pseudo, password, passwordConfirm } = req.body;
   const hashPassword = await bcrypt.hash(password, 10);
-  console.log(email, pseudo, password)
-  const user = new User(email, pseudo, hashPassword);
+  const user = new User();
   if (password === passwordConfirm) {
-    const x = await user.verifyIfMailAlreadyExist()
-    if (!(await user.verifyIfMailAlreadyExist())) {
-      if (await user.add()) {
+    if (!(await user.verifyIfMailAlreadyExist(email))) {
+      if (await user.add(email, pseudo, hashPassword)) {
         res.json(true);
       } else {
         res.json(false);

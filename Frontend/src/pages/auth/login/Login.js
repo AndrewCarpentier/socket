@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import { AuthContext } from "../../../context/AuthContext";
 
 export function Login() {
   const { login } = useContext(AuthContext);
+  const registerSuccess = new URLSearchParams(window.location.search).get('registerSuccess');
 
   const validationSchema = yup.object({
     email: yup.string().required("Email must be entered"),
@@ -40,6 +41,9 @@ export function Login() {
 
   return (
     <div>
+      {
+        registerSuccess ? <div>Vous êtes bien inscrit</div> : ""
+      }
       <form onSubmit={submit}>
         <input type="email" placeholder="email" {...register("email")} />
         <input
@@ -56,7 +60,7 @@ export function Login() {
         {errors.generic && (
           <li className="error-message">{errors.generic.message}</li>
         )}
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isSubmitting}>Login</button>
       </form>
       <Link to="/register">Register</Link>
     </div>

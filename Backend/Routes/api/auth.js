@@ -6,8 +6,8 @@ const { key, keyPub } = require("../../keys");
 
 router.post("/", async (req, res) => {
   const { email, password } = req.body;
-  const user = new User(email, "", password);
-  await user.getUserByMail();
+  const user = new User();
+  await user.getUserByMail(email);
   if (user.id !== 0) {
     if (bcrypt.compareSync(password, user.password)) {
       const token = jsonwebtoken.sign({}, key, {
@@ -29,13 +29,29 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/current", async (req, res) => {
+  const { auth } = req.cookies;
+  if (auth) {
+    const decodedToken = jsonwebtoken.verify(auth, keyPub);
+    const user = new User();
+    await user.getUserById(decodedToken.sub);
+    if (user.id > 0) {
+      res.json(user.getUserWithoutPassword);
+    } else {
+      res.json(null);
+    }
+  } else {
+    res.json(null);
+  }
+});
+
 router.delete("/", (req, res) => {
-    res.clearCookie("auth", {
-      sameSite: "none",
-      httpOnly: true,
-      secure: true,
-    });
-    res.end();
+  res.clearCookie("auth", {
+    sameSite: "none",
+    httpOnly: true,
+    secure: true,
   });
+  res.end();
+});
 
 module.exports = router;

@@ -9,7 +9,6 @@ export async function login(credentials) {
   });
 
   const backResponse = await response.json();
-  console.log({backResponse})
   if (response.ok) {
     return backResponse;
   } else {
@@ -19,4 +18,19 @@ export async function login(credentials) {
       throw new Error("Error api create user");
     }
   }
+}
+
+export async function getCurrentUser() {
+  const response = await fetch(`${API_AUTH}/current`, {
+    method: "GET",
+    credentials: "include",
+  });
+  return response.json();
+}
+
+export async function logout() {
+  await fetch(`${API_AUTH}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
 }

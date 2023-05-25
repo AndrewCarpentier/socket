@@ -1,21 +1,25 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const cookie = require("cookie-parser");
-const routes = require("./Routes");
-const app = express();
 const http = require("http");
-const server = http.createServer(app);
 const socketIo = require("socket.io");
+
+const port = 8000;
+
+const app = express();
+
+const server = http.createServer(app);
+
 const io = socketIo(server, {
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
-})
+});
 
 require('./database');
-const cors = require("cors");
-const port = 8000;
+const routes = require('./Routes');
+const cors = require('cors')
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -31,26 +35,32 @@ app.use(bodyParser.json());
 
 app.use(routes);
 
-app.use('*', (req, res)=>{
-  res.status(400).end();
-})
+const User = require('./database/model/user.model');
+const Message = require('./database/model/message.model');
 
 io.on("connection", (socket) => {
+  const user = new User();
+  const message = new Message();
+
   console.log("user connected");
   console.log(socket.id)
 
-  socket.on("message", (msg) => {
-    console.log(msg)
-    socket.emit("message", msg);
-    socket.broadcast.emit("message", msg);
+  socket.on("message", async(e) => {
+    if(message.add(e.message, e.idUser)){
+      await user.getUserById(e.idUser); 
+      socket.emit("message", {user : user, message : e.message});
+      socket.broadcast.emit("message", {pseudo : "andrew", message : e.message});
+    }
   });
 
   socket.on("disconnect", () => {
     console.log("user disconnect");
   });
+  
 });
 
-// Lancement du serveur Node.js
-app.listen(port, () => {
-  console.log(`Serveur Node.js écoutant sur le port ${port}`);
-});
+app.use('*', (req, res)=>{
+  res.status(400).end();
+})
+
+server.listen(port, () => console.log(`Listening on port ${port}`));
