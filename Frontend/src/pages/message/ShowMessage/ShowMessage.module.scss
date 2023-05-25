@@ -1,8 +1,19 @@
-.pseudo{
+.message {
+    padding: 10px;
+    &:hover{
+        background-color: var(--gray-3200);
+    }
+  .pseudo {
     font-weight: bold;
-}
+    color: var(--white);
+  }
 
-.date{
+  .date {
     font-size: 12px;
-    color: rgb(107, 107, 107);
+    color: var(--gray-2400);
+  }
+
+  .text {
+    color: var(--gray-1200);
+  }
 }

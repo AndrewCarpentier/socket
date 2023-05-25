@@ -1,10 +1,42 @@
 :root{
-    --primary : #6a89cc;
-    --dark : #4a69bd;
-    --gray-1 : #a4b0be;
-    --gray-2 : #ced6e0;
-    --light-gray : #dfe4ea;
-    --dark-gray : #4b6584;
+     /* Gray */
+  --gray-100: #ffffff;
+  --gray-200: #fcfcfc;
+  --gray-300: #f9f9f9;
+  --gray-400: #f5faff;
+  --gray-500: #f7f7f7;
+  --gray-600: #f6f6f6;
+  --gray-700: #f3f3f3;
+  --gray-800: #f2f3f4;
+  --gray-900: #f0f0f0;
+  --gray-1000: #ebedef;
+  --gray-1100: #ebebeb;
+  --gray-1200: #e6e6e6;
+  --gray-1300: #e3e4e5;
+  --gray-1400: #e3e3e3;
+  --gray-1500: #e1e1e1;
+  --gray-1600: #dedede;
+  --gray-1700: #dadddf;
+  --gray-1800: #dcdcdc;
+  --gray-1800-hover: #dcdcdcc5;
+  --gray-1900: #d9d9d9;
+  --gray-2000: #d7d7d7;
+  --gray-2100: #cdcdcd;
+  --gray-2200: #c7c7c7;
+  --gray-2300: #c2c2c2;
+  --gray-2400: #b3b3b3;
+  --gray-2500: #afafaf;
+  --gray-2600: #949494;
+  --gray-2700: #8a8e94;
+  --gray-2800: #4d4d4d;
+  --gray-2900: #36393e;
+  --gray-3000: #2e3338;
+  --gray-3100: #2c2f33;
+  --gray-3200: #23272a;
+  --gray-3300: #111010;
+  --gray-3400: #050809;
+  --gray-3500: #060607;
+  
     --accent: #1e3799;
     --text-color : #333;
     --error : #fc5c65;
@@ -12,5 +44,4 @@
     --font-family : "Roboto", "sans-serif";
     --box-shadow : 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
     --white : white;
-
 }

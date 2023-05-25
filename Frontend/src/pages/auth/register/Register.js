@@ -36,7 +36,7 @@ export function Register() {
   });
 
   const submit = handleSubmit(async (values) => {
-    if (!await CreateUser(values)) {
+    if (await CreateUser(values)) {
       setRegisterSuccess(true);
     }
   });

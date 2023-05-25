@@ -7,7 +7,6 @@ import { UserInformation } from "../UserInformation/UserInformation";
 export function MyForm() {
   const { user } = useContext(AuthContext);
   const [value, setValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   function submit(e) {
     e.preventDefault();
@@ -30,12 +29,10 @@ export function MyForm() {
       <input
         autoComplete="off"
         className={`${styles.input}`}
+        placeholder="Envoyer un message"
         id="input"
         onChange={(e) => setValue(e.target.value)}
       />
-      <button className={`${styles.button}`} type="submit" disabled={isLoading}>
-        Submit
-      </button>
     </form>
     </>
   );

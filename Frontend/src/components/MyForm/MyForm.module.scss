@@ -1,5 +1,17 @@
 .input{
+    height: 40px;
     font-size: 20px;
+    background-color: var(--gray-2900);
+    border: 0;
+    border-radius: 10px;
+    padding: 10px;
+    color: var(--gray-1800);
+    &:focus{
+        outline: none;
+    }
+    &::placeholder{
+        color: var(--gray-2800)
+    }
 }
 
 .container{
@@ -7,7 +19,6 @@
     .input{
         width: 100%;
     }
-
     .button{
         width: 15%;
     }

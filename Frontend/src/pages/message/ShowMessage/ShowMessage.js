@@ -37,12 +37,12 @@ export function ShowMessage() {
   return (
     <ul>
       {messages.map((message, i) => (
-        <li key={i} className={`mb10 ml20`}>
+        <li key={i} className={`${styles.message}`}>
           <div>
             <span className={`${styles.pseudo}`}>{message.pseudo}</span>
             <span className={`${styles.date} ml10`}>{message.date}</span>
           </div>
-          <div>{message.message}</div>
+          <div className={`${styles.text}`}>{message.message}</div>
         </li>
       ))}
     </ul>

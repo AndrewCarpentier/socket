@@ -1,13 +1,55 @@
-.pseudo{
+.user {
+  padding: 10px;
+  .pseudo {
     font-weight: bold;
-}
+    color: var(--white);
+  }
 
-.email{
+  .email {
     font-size: 13px;
+    color: var(--gray-2000);
+  }
 }
 
-.parameter{
-    font-size: 20px;
-    width: 40px;
-    cursor: pointer;
+.tooltip {
+  color: var(--gray-2000);
+  font-size: 20px;
+  width: 40px;
+  cursor: pointer;
+  position: relative;
+  &:hover {
+    background-color: var(--gray-1800-hover);
+    color: var(--gray-2000);
+    border-radius: 10px;
+  }
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: var(--gray-3500);
+  color: var(--gray-1800);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--gray-3500) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
