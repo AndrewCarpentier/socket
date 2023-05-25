@@ -37,6 +37,9 @@ app.use(routes);
 
 const User = require('./database/model/user.model');
 const Message = require('./database/model/message.model');
+const { clearInterval } = require("timers");
+const { Console } = require("console");
+let interval;
 
 io.on("connection", (socket) => {
   const user = new User();
@@ -53,11 +56,31 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on('write', async(idUser)=>{
+    await user.getUserById(idUser);  
+    console.log(user)  
+    if(interval){
+      clearInterval(interval);
+    }
+    interval = setInterval(()=> peopleWrite({socket, user : user.getUserWithoutPassword}), 500);
+  })
+
+  socket.on('stopWrite', ()=>{
+    console.log('stop')
+    clearInterval(interval);
+    socket.broadcast.emit('stopWrite', "test");
+  })
+
   socket.on("disconnect", () => {
     console.log("user disconnect");
+    clearInterval(interval);
   });
   
 });
+
+const peopleWrite = e => {
+  e.socket.broadcast.emit('write', e.user)
+}
 
 app.use('*', (req, res)=>{
   res.status(400).end();

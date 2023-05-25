@@ -1,25 +1,46 @@
-.input{
-    height: 40px;
-    font-size: 20px;
-    background-color: var(--gray-2900);
-    border: 0;
-    border-radius: 10px;
-    padding: 10px;
-    color: var(--gray-1800);
-    &:focus{
-        outline: none;
-    }
-    &::placeholder{
-        color: var(--gray-2800)
-    }
+.input {
+  height: 40px;
+  font-size: 20px;
+  background-color: var(--gray-2900);
+  border: 0;
+  border-radius: 10px;
+  padding: 10px;
+  color: var(--gray-1800);
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: var(--gray-2800);
+  }
 }
 
-.container{
+.container {
+  width: 100%;
+  .input {
     width: 100%;
-    .input{
-        width: 100%;
-    }
-    .button{
-        width: 15%;
-    }
+  }
+  .button {
+    width: 15%;
+  }
+}
+
+.otherUserWrite {
+  color: var(--gray-1800);
+  position: absolute;
+  top: 50px;
+  animation-name: blinkAnimation;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blinkAnimation {
+  0% {
+    color: var(--gray-2900);
+  }
+  50% {
+    color: var(--gray-1800);
+  }
+  100%{
+    color: var(--gray-2900);
+  }
 }
