@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
     if(message.add(e.message, e.idUser)){
       await user.getUserById(e.idUser); 
       socket.emit("message", {user : user, message : e.message});
-      socket.broadcast.emit("message", {pseudo : "andrew", message : e.message});
+      socket.broadcast.emit("message", {user : user, message : e.message});
     }
   });
 
