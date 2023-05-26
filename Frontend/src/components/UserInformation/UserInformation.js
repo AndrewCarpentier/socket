@@ -1,5 +1,5 @@
 import styles from "./UserInformation.module.scss";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { socket } from "../../socket";
 

@@ -8,9 +8,9 @@
         opacity: 0.8;
     }
     &-primary{
-        background-color: var(--primary);
-        color: var(--white);
-        border: 2px solid var(--primary);
+        background-color: var(--gray-2800);
+        color: var(--gray-1800);
+        border: 2px solid var(--gray-2800);
     }
     &-primary-reverse{
         background-color: var(--white);
@@ -20,6 +20,7 @@
 }
 
 .card{
+    padding: 50px;
     border-radius: 20px;
     background-color: var(--white);
 }

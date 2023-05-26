@@ -1,9 +1,10 @@
+import styles from "./Register.module.scss";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
 import { CreateUser } from "../../../api/User";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Register() {
   const [registerSuccess, setRegisterSuccess] = useState(false);
@@ -36,38 +37,94 @@ export function Register() {
   });
 
   const submit = handleSubmit(async (values) => {
-    if (await CreateUser(values)) {
-      setRegisterSuccess(true);
+    try {
+      if (await CreateUser(values)) {
+        setRegisterSuccess(true);
+      }
+    } catch (message) {
+      setError("generic", { type: "generic", message });
     }
   });
 
   return (
-    <div>
+    <div
+      className={`container justify-content-center align-item-center ${styles.card}`}
+    >
       {registerSuccess ? <Navigate to="/?registerSuccess=true" /> : ""}
-      <form onSubmit={submit}>
-        <input type="text" placeholder="pseudo" {...register("pseudo")} />
-        <input type="email" placeholder="email" {...register("email")} />
-        <input
-          type="password"
-          placeholder="password"
-          {...register("password")}
-        />
-        <input
-          type="password"
-          placeholder="password confirmation"
-          {...register("passwordConfirm")}
-        />
+      <form onSubmit={submit} className={`${styles.form}`}>
+        <div>
+          <label htmlFor="pseudo"></label>
+          <input
+            autoComplete="off"
+            type="text"
+            name="pseudo"
+            placeholder="pseudo"
+            {...register("pseudo")}
+          />
+        </div>
+        <div>
+          <label htmlFor="email"></label>
+          <input
+            autoComplete="off"
+            type="email"
+            name="email"
+            placeholder="email"
+            {...register("email")}
+          />
+        </div>
+        <div>
+          <label htmlFor="password"></label>
+          <input
+            autoComplete="off"
+            type="password"
+            name="password"
+            placeholder="password"
+            {...register("password")}
+          />
+        </div>
+        <div>
+          <label htmlFor="passwordConfirm"></label>
+          <input
+            autoComplete="off"
+            type="password"
+            name="passwordConfirm"
+            placeholder="password confirmation"
+            {...register("passwordConfirm")}
+          />
+        </div>
         <ul>
-          {errors.pseudo && <li>{errors.pseudo.message}</li>}
-          {errors.email && <li>{errors.email.message}</li>}
-          {errors.password && <li>{errors.password.message}</li>}
-          {errors.passwordConfirm && <li>{errors.passwordConfirm.message}</li>}
+          {errors.pseudo && (
+            <li className={`${styles.errors}`}>{errors.pseudo.message}</li>
+          )}
+          {errors.email && (
+            <li className={`${styles.errors}`}>{errors.email.message}</li>
+          )}
+          {errors.password && (
+            <li className={`${styles.errors}`}>{errors.password.message}</li>
+          )}
+          {errors.passwordConfirm && (
+            <li className={`${styles.errors}`}>
+              {errors.passwordConfirm.message}
+            </li>
+          )}
+          {errors.generic && (
+            <li className={`${styles.errors}`}>{errors.generic.message}</li>
+          )}
         </ul>
-        <button type="submit" disabled={isSubmitting}>
+
+        <button
+          className="btn btn-primary"
+          type="submit"
+          disabled={isSubmitting}
+        >
           Register
         </button>
+        <div className="d-flex justify-content-center">
+          <Link to="/" className={`${styles.login}`}>
+            Login
+          </Link>
+        </div>
       </form>
-      <Link to="/">Login</Link>
     </div>
   );
 }

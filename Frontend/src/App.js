@@ -5,7 +5,7 @@ import './moment/fr';
 
 function App() {
   return (
-    <div className={`${styles.appContainer}`}>
+    <div className={`${styles.appContainer} d-flex`}>
       <AuthProvider>
         <Outlet />
       </AuthProvider>

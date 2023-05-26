@@ -1,0 +1,44 @@
+.errors {
+  background-color: var(--error);
+  padding: 10px;
+  color: var(--gray-2900);
+}
+
+.card {
+  background-color: var(--gray-2900);
+  padding: 50px;
+  border-radius: 20px;
+
+  .form {
+    input {
+      margin: 10px;
+      padding: 10px;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+    }
+    a {
+      padding-top: 10px;
+      color: var(--gray-1800);
+      text-decoration: none;
+      &:link {
+        text-decoration: none;
+      }
+      &:visited {
+        text-decoration: none;
+      }
+      &:hover {
+        text-decoration: none;
+      }
+      &:active {
+        text-decoration: none;
+      }
+    }
+  }
+}

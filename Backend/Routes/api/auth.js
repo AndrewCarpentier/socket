@@ -22,10 +22,10 @@ router.post("/", async (req, res) => {
       });
       res.json(user.getUserWithoutPassword);
     } else {
-      res.json("Email et/ou mot de passe incorrect");
+      res.status(400).json("Email et/ou mot de passe incorrect");
     }
   } else {
-    res.json("Email et/ou mot de passe incorrect");
+    res.status(400).json("Email et/ou mot de passe incorrect");
   }
 });
 

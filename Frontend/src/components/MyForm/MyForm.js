@@ -27,6 +27,7 @@ export function MyForm() {
         message: message.current.value,
       });
       document.getElementById("input").value = "";
+      socket.emit("stopWrite", "");
     }
   }
 

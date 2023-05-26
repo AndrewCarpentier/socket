@@ -116,6 +116,27 @@ class User {
       }
     });
   }
+
+  verifyIfPseudoAlreadyExist(pseudo) {
+    return new Promise((resolve, reject) => {
+      try {
+        connection.query(
+          "SELECT * FROM user WHERE pseudo = ?",
+          [pseudo],
+          (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          }
+        );
+      } catch (error) {
+        reject("API error");
+      }
+    });
+  }
 }
 
 module.exports = User;
