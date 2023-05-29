@@ -37,7 +37,7 @@ export function ShowMessage() {
   return (
     <ul>
       {messages.map((message, i) => (
-        <li key={i} className={`${styles.message}`}>
+        <li key={i} id={i+1} className={`${styles.message}`}>
           <div>
             <span className={`${styles.pseudo}`}>{message.pseudo}</span>
             <span className={`${styles.date} ml10`}>{message.date}</span>

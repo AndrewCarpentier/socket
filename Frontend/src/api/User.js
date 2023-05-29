@@ -1,4 +1,4 @@
-const API_USER = "http://localhost:8000/api/user";
+const API_USER = "/api/user";
 
 export async function CreateUser(newUser) {
   const response = await fetch(`${API_USER}`, {

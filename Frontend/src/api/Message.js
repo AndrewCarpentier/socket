@@ -1,4 +1,4 @@
-const API_MESSAGE = "http://localhost:8000/api/message";
+const API_MESSAGE = "/api/message";
 
 export async function getMessages() {
   const response = await fetch(`${API_MESSAGE}/all`);

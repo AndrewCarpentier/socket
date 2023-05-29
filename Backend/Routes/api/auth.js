@@ -15,11 +15,7 @@ router.post("/", async (req, res) => {
         expiresIn: 3600 * 24 * 31 * 12,
         algorithm: "RS256",
       });
-      res.cookie("auth", token, {
-        sameSite: "none",
-        httpOnly: "true",
-        secure: "false",
-      });
+      res.cookie("auth", token);
       res.json(user.getUserWithoutPassword);
     } else {
       res.status(400).json("Email et/ou mot de passe incorrect");

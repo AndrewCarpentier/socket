@@ -52,7 +52,7 @@ export function Register() {
     >
       {registerSuccess ? <Navigate to="/?registerSuccess=true" /> : ""}
       <form onSubmit={submit} className={`${styles.form}`}>
-        <div>
+        <div className="d-flex">
           <label htmlFor="pseudo"></label>
           <input
             autoComplete="off"
@@ -62,7 +62,7 @@ export function Register() {
             {...register("pseudo")}
           />
         </div>
-        <div>
+        <div className="d-flex">
           <label htmlFor="email"></label>
           <input
             autoComplete="off"
@@ -72,7 +72,7 @@ export function Register() {
             {...register("email")}
           />
         </div>
-        <div>
+        <div className="d-flex">
           <label htmlFor="password"></label>
           <input
             autoComplete="off"
@@ -82,7 +82,7 @@ export function Register() {
             {...register("password")}
           />
         </div>
-        <div>
+        <div className="d-flex">
           <label htmlFor="passwordConfirm"></label>
           <input
             autoComplete="off"

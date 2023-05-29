@@ -46,9 +46,8 @@ export function Login() {
     <div
       className={`container justify-content-center align-item-center ${styles.card}`}
     >
-      {registerSuccess ? <div>Vous êtes bien inscrit</div> : ""}
       <form onSubmit={submit} className={`${styles.form}`}>
-        <div>
+        <div className="d-flex">
           <label htmlFor="email"></label>
           <input
             type="email"
@@ -58,7 +57,7 @@ export function Login() {
             {...register("email")}
           />
         </div>
-        <div>
+        <div className="d-flex">
           <label htmlFor="password"></label>
           <input
             type="password"
@@ -68,7 +67,11 @@ export function Login() {
             {...register("password")}
           />
         </div>
+
         <ul>
+          {registerSuccess && (
+            <li className={`${styles.success}`}>Vous êtes bien inscrit</li>
+          )}
           {errors.email && (
             <li className={`${styles.errors}`}>{errors.email.message}</li>
           )}

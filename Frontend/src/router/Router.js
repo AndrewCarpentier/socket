@@ -31,7 +31,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "message",
-        element:<ProtectedRouteNoAuth><Message /></ProtectedRouteNoAuth> ,
+        element: (
+          <ProtectedRouteNoAuth>
+            <Message />
+          </ProtectedRouteNoAuth>
+        ),
       },
     ],
   },

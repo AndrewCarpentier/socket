@@ -1,6 +1,6 @@
 const bodyParser = require("body-parser");
 const express = require("express");
-const cookie = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const http = require("http");
 const socketIo = require("socket.io");
 
@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -22,14 +22,14 @@ const routes = require('./Routes');
 const cors = require('cors')
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "http://172.24.208.1:3000");
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.header("Access-Control-Allow-Credentials", true);
   next();
 });
 
-app.use(cookie());
+app.use(cookieParser());
 
 app.use(bodyParser.json());
 
@@ -38,7 +38,6 @@ app.use(routes);
 const User = require('./database/model/user.model');
 const Message = require('./database/model/message.model');
 const { clearInterval } = require("timers");
-const { Console } = require("console");
 let interval;
 
 io.on("connection", (socket) => {
