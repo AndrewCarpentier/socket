@@ -3,11 +3,15 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { socket } from "../../socket";
 import { AuthContext } from "../../context/AuthContext";
 import { UserInformation } from "../UserInformation/UserInformation";
+import GifPicker from "gif-picker-react";
+
+const TENOR_API_KEY = "";
 
 export function MyForm() {
   const { user } = useContext(AuthContext);
   const message = useRef();
   const [values, setValues] = useState("");
+  const [showGifPicker, setShowGifPicker] = useState(false);
 
   useEffect(() => {
     socket.on("write", (values) => {
@@ -38,9 +42,24 @@ export function MyForm() {
     socket.emit("stopWrite", "");
   }
 
+  function handleGifClick() {
+    setShowGifPicker(!showGifPicker);
+  }
+
+  function onGifClick(e) {
+    socket.emit("gif", { idUser: user.id, message: e.url });
+    setShowGifPicker(false);
+  }
+
   return (
     <>
       <UserInformation />
+      {showGifPicker && (
+        <div className={styles.gifPicker}>
+          <GifPicker tenorApiKey={TENOR_API_KEY} onGifClick={onGifClick} />
+        </div>
+      )}
+
       <div className={styles.container}>
         {values && (
           <div className={styles.otherUserWrite}>
@@ -57,6 +76,9 @@ export function MyForm() {
             onBlur={onBlur}
             ref={message}
           />
+          <div onClick={handleGifClick} className={`${styles.gif}`}>
+            GIF
+          </div>
         </form>
       </div>
     </>

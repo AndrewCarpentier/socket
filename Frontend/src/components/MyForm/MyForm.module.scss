@@ -40,7 +40,28 @@
   50% {
     color: var(--gray-1800);
   }
-  100%{
+  100% {
     color: var(--gray-2900);
   }
+}
+
+.gif {
+  z-index: 3;
+  background: var(--white);
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--white);
+  border-radius: 5px;
+  position: absolute;
+  top: 19px;
+  right: 35px;
+  cursor: pointer;
+}
+
+.gifPicker{
+  position: absolute;
+  top: -450px;
+  right: 20px;
 }

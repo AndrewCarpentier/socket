@@ -6,7 +6,8 @@ class Message {
     (this.id = 0),
       (this.message = null),
       (this.creationDate = null),
-      (this.userId = 0);
+      (this.gif = null);
+    this.userId = 0;
     this.user = null;
   }
 
@@ -19,8 +20,8 @@ class Message {
           if (result.length > 0) {
             await Promise.all(
               result.map(async (e) => {
-                  e.user = await user.getUserById(e.idUser);
-                  delete e.idUser;
+                e.user = await user.getUserById(e.idUser);
+                delete e.idUser;
                 return e;
               })
             );
@@ -33,12 +34,12 @@ class Message {
     });
   }
 
-  add(message, idUser) {
+  add(message, idUser, gif) {
     return new Promise((resolve, reject) => {
       try {
         connection.query(
-          "INSERT INTO message (message, creationDate, idUser) VALUES (?,now(),?)",
-          [message, idUser],
+          "INSERT INTO message (message, creationDate, idUser, gif) VALUES (?,now(),?, ?)",
+          [message, idUser, gif],
           (err, result) => {
             if (err) throw err;
             if (result.affectedRows === 1) {

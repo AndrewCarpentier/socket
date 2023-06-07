@@ -7,6 +7,7 @@ import * as moment from "moment";
 moment.locale("fr");
 export function ShowMessage() {
   const [messages, setMessages] = useState([]);
+  console.log(messages)
 
   useEffect(() => {
     const fetchMessage = async () => {
@@ -22,6 +23,7 @@ export function ShowMessage() {
         {
           pseudo: values.user.pseudo,
           message: values.message,
+          gif : Boolean(values.gif),
           date: date.toString(),
         },
       ]);
@@ -42,7 +44,8 @@ export function ShowMessage() {
             <span className={`${styles.pseudo}`}>{message.pseudo}</span>
             <span className={`${styles.date} ml10`}>{message.date}</span>
           </div>
-          <div className={`${styles.text}`}>{message.message}</div>
+          {message.gif ? (<img className={styles.gif} src={message.message}/>) : (<div className={`${styles.text}`}>{message.message}</div>)}
+          
         </li>
       ))}
     </ul>
