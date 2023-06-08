@@ -21,11 +21,7 @@ class User {
           (err, result) => {
             if (err) throw err;
             this.id = result.insertId;
-            if (result.affectedRows === 1) {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
+            resolve(result.affectedRows === 1);
           }
         );
       } catch (error) {
@@ -57,6 +53,23 @@ class User {
               this.id = 0;
               resolve({ id: 0 });
             }
+          }
+        );
+      } catch (error) {
+        reject("API error");
+      }
+    });
+  }
+
+  static getUsersByChannelId(idChannel) {
+    return new Promise((resolve, reject) => {
+      try {
+        connection.query(
+          "SELECT u.id, u.pseudo, u.email FROM user_channel uc INNER JOIN user u ON u.id = uc.idUser WHERE uc.idChannel = ?",
+          [idChannel],
+          (err, result) => {
+            if(err) throw err;
+            resolve(result)
           }
         );
       } catch (error) {
@@ -104,11 +117,7 @@ class User {
           [email],
           (err, result) => {
             if (err) throw err;
-            if (result.length > 0) {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
+            resolve(result.length > 0);
           }
         );
       } catch (error) {
@@ -125,11 +134,7 @@ class User {
           [pseudo],
           (err, result) => {
             if (err) throw err;
-            if (result.length > 0) {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
+            resolve(result.length > 0);
           }
         );
       } catch (error) {
