@@ -17,6 +17,7 @@ export function Message() {
       if(!userIdSendToSocket){
         addIdToSocket(user.id)
         setUserIdSendToSocket(true)
+        console.log(socket)
       }
       socket.connect();
   

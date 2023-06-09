@@ -10,6 +10,7 @@ function Socket(io) {
     const message = new Message();
 
     console.log("user connected");
+    console.log(socket)
     user.connectedSocket(socket.id, socket.handshake.query.idUser);
 
     socket.on("newConnection", () => {

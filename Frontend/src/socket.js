@@ -5,8 +5,8 @@ let URL = "http://localhost:8000";
 let Socket = io(URL, {autoConnect: false});
 
 export function addIdToSocket(idUser){
-    Socket = io(`${URL}?idUser=${idUser}`, {autoConnect : false})
-    return Socket;
+    socket = io(`${URL}?idUser=${idUser}`, {autoConnect : false})
+    return socket;
 }
 
-export const socket = Socket;
+export var socket = Socket;
