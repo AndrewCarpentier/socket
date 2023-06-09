@@ -54,7 +54,6 @@ function Socket(io) {
     });
 
     socket.on("stopWrite", () => {
-      console.log("stop");
       clearInterval(interval);
       socket.broadcast.emit("stopWrite", "test");
     });
