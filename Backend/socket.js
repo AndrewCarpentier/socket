@@ -10,7 +10,12 @@ function Socket(io) {
     const message = new Message();
 
     console.log("user connected");
-    console.log(socket.id);
+    user.connectedSocket(socket.id, socket.handshake.query.idUser);
+
+    socket.on("newConnection", () => {
+      socket.emit("newConnection", "");
+      socket.broadcast.emit("newConnection", "");
+    });
 
     socket.on("message", async (e) => {
       if (message.add(e.message, e.idUser, false)) {
@@ -56,7 +61,10 @@ function Socket(io) {
 
     socket.on("disconnect", () => {
       console.log("user disconnect");
+      user.disconnectedSocket(socket.handshake.query.idUser);
       clearInterval(interval);
+      socket.emit("disconnection", "");
+      socket.broadcast.emit("disconnection", "");
     });
   });
 

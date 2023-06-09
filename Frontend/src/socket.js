@@ -1,5 +1,9 @@
 import {io} from 'socket.io-client';
 
-const URL = "http://localhost:8000";
+let URL = "http://localhost:8000";
 
-export const socket = io(URL, {autoConnect: false});
+export function addIdToSocket(idUser){
+    socket = io(`${URL}?idUser=${idUser}`, {autoConnect : false})
+}
+
+export let socket = io(URL, {autoConnect: false});

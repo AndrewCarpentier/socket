@@ -1,0 +1,20 @@
+.container{
+    color: var(--white);
+    background-color: var(--gray-2900);
+    width: 150px;
+    height: 100%;
+    padding: 10px;
+
+    li{
+        padding: 5px;
+    }
+
+    
+}
+
+.dot{
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: var(--white);
+}

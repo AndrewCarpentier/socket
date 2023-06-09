@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get('/getUserByChannelId/:idChannel', async(req,res)=>{
+router.get('/getUsersByChannelId/:idChannel', async(req,res)=>{
   const {idChannel} = req.params;
   res.json(await User.getUsersByChannelId(idChannel));
 })

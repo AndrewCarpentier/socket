@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { UserInformation } from "../UserInformation/UserInformation";
 import GifPicker from "gif-picker-react";
 
-const TENOR_API_KEY = "";
+const TENOR_API_KEY = "AIzaSyBLXlrIIzpnxN57sLl2rv7AJg-J5Hpg-Ws";
 
 export function MyForm() {
   const { user } = useContext(AuthContext);

@@ -2,10 +2,11 @@ const connection = require("../index");
 
 class User {
   constructor() {
-    (this.id = 0),
-      (this.email = null),
-      (this.pseudo = null),
-      (this.password = null);
+    this.id = 0;
+    this.email = null;
+    this.pseudo = null;
+    this.password = null;
+    this.connected = null;
   }
 
   get getUserWithoutPassword() {
@@ -65,11 +66,20 @@ class User {
     return new Promise((resolve, reject) => {
       try {
         connection.query(
-          "SELECT u.id, u.pseudo, u.email FROM user_channel uc INNER JOIN user u ON u.id = uc.idUser WHERE uc.idChannel = ?",
+          "SELECT u.id, u.pseudo, u.email, u.idSocket FROM user_channel uc INNER JOIN user u ON u.id = uc.idUser WHERE uc.idChannel = ?",
           [idChannel],
-          (err, result) => {
-            if(err) throw err;
-            resolve(result)
+          async (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+              await Promise.all(
+                result.map(async (e) => {
+                  e.connected = e.idSocket != "";
+                  delete e.idSocket;
+                  return e;
+                })
+              );
+            }
+            resolve(result);
           }
         );
       } catch (error) {
@@ -107,6 +117,36 @@ class User {
         reject("API error");
       }
     });
+  }
+
+  connectedSocket(idSocket, idUser) {
+    return new Promise((resolve, reject) => {
+      try {
+        connection.query(
+          "UPDATE user SET idSocket = ? WHERE id = ?",
+          [idSocket, idUser],
+          (err, result) => {
+            if(err) throw err;
+            resolve(result.affectedRows === 1);
+          }
+        );
+      } catch (error) {
+        reject("API error");
+      }
+    });
+  }
+
+  disconnectedSocket(idUser){
+    return new Promise((resolve, reject)=>{
+      try {
+        connection.query("UPDATE user SET idSocket = '' WHERE id = ?", [idUser], (err,result)=>{
+          if(err) throw err;
+          resolve(result.affectedRows === 1);
+        })
+      } catch (error) {
+        reject('API error')
+      }
+    })
   }
 
   verifyIfMailAlreadyExist(email) {

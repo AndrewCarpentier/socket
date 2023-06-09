@@ -92,3 +92,18 @@
     max-width: 1200px;
     margin: auto;
 }
+
+.dot{
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: var(--white);
+}
+
+.bgColorGreen{
+    background-color: var(--success);
+}
+
+.bgColorRed{
+    background-color: var(--error);
+}

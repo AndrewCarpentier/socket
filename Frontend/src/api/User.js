@@ -17,3 +17,8 @@ export async function CreateUser(newUser) {
     }
   }
 }
+
+export async function getUserByChannelId(idChannel){
+  const response = await fetch(`${API_USER}/getUsersByChannelId/${idChannel}`);
+  return await response.json();
+}

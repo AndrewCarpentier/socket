@@ -1,4 +1,5 @@
 .input {
+  width: 100%;
   height: 40px;
   font-size: 20px;
   background-color: var(--gray-2900);
@@ -18,9 +19,6 @@
   width: 100%;
   .input {
     width: 100%;
-  }
-  .button {
-    width: 15%;
   }
 }
 
@@ -56,7 +54,7 @@
   border-radius: 5px;
   position: absolute;
   top: 19px;
-  left: 90%;
+  right: 5%;
   cursor: pointer;
   &:hover{
     background-color: var(--gray-1800);
