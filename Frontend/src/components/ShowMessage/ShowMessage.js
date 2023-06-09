@@ -1,17 +1,16 @@
 import styles from "./ShowMessage.module.scss";
 import { useEffect, useState } from "react";
-import { socket } from "../../../socket";
-import { getMessages } from "../../../api/Message";
+import { socket } from "../../socket";
+import { getMessageByIdChannel } from "../../api/Message";
 import * as moment from "moment";
 
 moment.locale("fr");
-export function ShowMessage() {
+export function ShowMessage({channel}) {
   const [messages, setMessages] = useState([]);
-  console.log(messages)
 
   useEffect(() => {
     const fetchMessage = async () => {
-      const messages = await getMessages();
+      const messages = await getMessageByIdChannel(channel.id);
       messages.map((message) => onMessage(message));
     };
     fetchMessage();
@@ -34,7 +33,7 @@ export function ShowMessage() {
     return () => {
       socket.off("message", onMessage);
     };
-  }, [setMessages]);
+  }, [setMessages, channel]);
 
   return (
     <ul>
@@ -44,8 +43,7 @@ export function ShowMessage() {
             <span className={`${styles.pseudo}`}>{message.pseudo}</span>
             <span className={`${styles.date} ml10`}>{message.date}</span>
           </div>
-          {message.gif ? (<img className={styles.gif} src={message.message}/>) : (<div className={`${styles.text}`}>{message.message}</div>)}
-          
+          {message.gif ? (<img className={styles.gif} src={message.message} alt="gif"/>) : (<div className={`${styles.text}`}>{message.message}</div>)}
         </li>
       ))}
     </ul>

@@ -6,4 +6,9 @@ router.get('/all', async(req,res)=>{
     res.json(await message.getAll());
 });
 
+router.get('/getMessagesByIdChannel/:idChannel', async(req,res)=>{
+    const {idChannel} = req.params;
+    res.json(await Message.getMessageByIdChannel(idChannel))
+})
+
 module.exports = router;

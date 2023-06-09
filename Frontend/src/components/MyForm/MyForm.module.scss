@@ -56,8 +56,11 @@
   border-radius: 5px;
   position: absolute;
   top: 19px;
-  right: 35px;
+  left: 90%;
   cursor: pointer;
+  &:hover{
+    background-color: var(--gray-1800);
+  }
 }
 
 .gifPicker{

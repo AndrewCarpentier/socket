@@ -34,6 +34,29 @@ class Message {
     });
   }
 
+  static getMessageByIdChannel(idChannel){
+    const user = new User();
+    return new Promise((resolve, reject)=>{
+      try {
+        connection.query('SELECT * FROM message WHERE idChannel = ?', [idChannel], async(err, result)=>{
+          if(err) throw err;
+          if(result.length > 0){
+            await Promise.all(
+              result.map(async (e)=>{
+                e.user = await user.getUserById(e.idUser);
+                delete e.idUser;
+                return e;
+              })
+            )
+          }
+          resolve(result);
+        })
+      } catch (error) {
+        reject('Error api');
+      }
+    })
+  }
+
   add(message, idUser, gif) {
     return new Promise((resolve, reject) => {
       try {
