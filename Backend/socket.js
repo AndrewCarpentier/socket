@@ -18,7 +18,7 @@ function Socket(io) {
     });
 
     socket.on("message", async (e) => {
-      if (message.add(e.message, e.idUser, false)) {
+      if (message.add(e.message, e.idUser, false, 1)) {
         await user.getUserById(e.idUser);
         socket.emit("message", { user: user, message: e.message, gif: false });
         socket.broadcast.emit("message", {
@@ -30,7 +30,7 @@ function Socket(io) {
     });
 
     socket.on("gif", async (e) => {
-      if (message.add(e.message, e.idUser, true)) {
+      if (message.add(e.message, e.idUser, true, 1)) {
         await user.getUserById(e.idUser);
         socket.emit("message", { user: user, message: e.message, gif: true });
         socket.broadcast.emit("message", {

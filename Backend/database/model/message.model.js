@@ -57,12 +57,12 @@ class Message {
     })
   }
 
-  add(message, idUser, gif) {
+  add(message, idUser, gif, idChannel) {
     return new Promise((resolve, reject) => {
       try {
         connection.query(
-          "INSERT INTO message (message, creationDate, idUser, gif) VALUES (?,now(),?, ?)",
-          [message, idUser, gif],
+          "INSERT INTO message (message, creationDate, idUser, gif, idChannel) VALUES (?,now(),?, ?, ?)",
+          [message, idUser, gif, idChannel],
           (err, result) => {
             if (err) throw err;
             if (result.affectedRows === 1) {
