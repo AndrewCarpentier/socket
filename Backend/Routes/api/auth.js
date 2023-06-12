@@ -32,7 +32,7 @@ router.get("/current", async (req, res) => {
     const user = new User();
     await user.getUserById(decodedToken.sub);
     if (user.id > 0) {
-      res.json(user.getUserWithoutPassword);
+      res.json(user);
     } else {
       res.json(null);
     }

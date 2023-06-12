@@ -30,7 +30,6 @@ router.post("/", async (req, res) => {
 router.get("/getUsersByChannelId/:idChannel", async (req, res) => {
   const { idChannel } = req.params;
   const { private } = req.query;
-  console.log({private});
   if (private === "true") {
     res.json(await User.getUsersByPrivateChannelId(idChannel));
   } else {

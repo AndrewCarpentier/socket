@@ -129,7 +129,6 @@ class Channel {
             if (result.length > 0) {
               this.id = result[0].id;
               this.privateMessage = true;
-              resolve(result[0]);
             }
           }
         );

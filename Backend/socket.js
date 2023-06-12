@@ -14,6 +14,7 @@ function Socket(io) {
     
     user.privateChannelList.forEach((channel)=>{
       socket.on(channel.id + "privateMessage", async(e)=>{
+        console.log(user)
         if (await message.add(e.message, user.id, false, e.idChannel, true)) {
           socket.emit(channel.id + "privateMessage", { user: user, message: e.message, gif: false });
           socket.broadcast.emit(channel.id + "privateMessage", {
@@ -23,6 +24,17 @@ function Socket(io) {
           });
         }
       })
+
+      socket.on(channel.id + "privateGif", async (e) => {
+        if (message.add(e.message, user.id, true, e.idChannel, true)) {
+          socket.emit(channel.id + "privateMessage", { user: user, message: e.message, gif: true });
+          socket.broadcast.emit(channel.id + "privateMessage", {
+            user: user,
+            message: e.message,
+            gif: true,
+          });
+        }
+      });
     })
     user.channelList.forEach((channel) => {
       socket.on(channel.id + "message", async (e) => {

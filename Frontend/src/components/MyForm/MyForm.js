@@ -57,7 +57,19 @@ export function MyForm({ channel }) {
   }
 
   function onGifClick(e) {
-    socket.emit(channel.id + "gif", { message: e.url, idChannel: channel.id });
+    if (channel) {
+      if (channel.privateMessage) {
+        socket.emit(channel.id + "privateGif", {
+          message: e.url,
+          idChannel: channel.id,
+        });
+      } else {
+        socket.emit(channel.id + "gif", {
+          message: e.url,
+          idChannel: channel.id,
+        });
+      }
+    }
     setShowGifPicker(false);
   }
 
