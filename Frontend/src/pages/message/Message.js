@@ -11,13 +11,12 @@ export function Message() {
   const { user } = useContext(AuthContext);
   const [channel, setChannel] = useState(null);
   const [userIdSendToSocket, setUserIdSendToSocket] = useState(false);
-
+  console.log(user)
   useEffect(()=>{
     if (user) {
       if(!userIdSendToSocket){
         addIdToSocket(user.id)
         setUserIdSendToSocket(true)
-        console.log(socket)
       }
       socket.connect();
   
@@ -44,9 +43,9 @@ export function Message() {
       <div className={styles.message}>
         {channel && <ShowMessage channel={channel} />}
       </div>
-      <div>{channel && <ShowUser channel={channel} />}</div>
+      <div>{channel && <ShowUser channel={channel} chooseChannel={setChannel} />}</div>
       <div className={`d-flex ${styles.form}`}>
-        <MyForm />
+        <MyForm channel={channel} />
       </div>
     </div>
   );

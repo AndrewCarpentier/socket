@@ -5,7 +5,7 @@ export async function getMessages() {
   return await response.json();
 }
 
-export async function getMessageByIdChannel(idChannel){
-  const response = await fetch(`${API_MESSAGE}/getMessagesByIdChannel/${idChannel}`);
+export async function getMessageByIdChannel(idChannel, privateBool){
+  const response = await fetch(`${API_MESSAGE}/getMessagesByIdChannel/${idChannel}?private=${privateBool ? 1 : 0}`);
   return await response.json();
 }

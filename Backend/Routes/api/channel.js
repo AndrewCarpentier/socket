@@ -16,4 +16,24 @@ router.get('/getChannelsByIdUser/:idUser', async(req, res)=>{
     res.json(channels);
 })
 
+router.get('/getPrivateChannel/:idUser/:idUserSend', async(req,res)=>{
+    const {idUser, idUserSend} = req.params;
+    if(idUser === idUserSend){
+        res.status(400).json("Error idUser == idUser");
+    }
+    const channel = new Channel();
+    const channelExist = await Channel.verifyPrivateMessageChannelExist(idUser, idUserSend);
+    if(channelExist){
+        await channel.getPrivateChannel(idUser, idUserSend);
+        res.json(channel);
+    }else{
+        if(await Channel.addPrivateChannel(idUser, idUserSend)){
+            await channel.getPrivateChannel(idUser, idUserSend);
+            res.json(channel);
+        }else{
+            res.json("Error api");
+        }
+    }
+})
+
 module.exports = router;

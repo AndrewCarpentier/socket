@@ -1,14 +1,21 @@
 import styles from "./ShowUser.module.scss";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getUserByChannelId } from "../../api/User";
 import { socket } from "../../socket";
+import { AuthContext } from "../../context/AuthContext";
+import { getPrivateChannel } from "../../api/Channel";
 
-export function ShowUser({ channel }) {
+export function ShowUser({ channel, chooseChannel }) {
+  const { user } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      setUsers(await getUserByChannelId(channel.id));
+      if (channel.privateMessage) {
+        setUsers(await getUserByChannelId(channel.id, true));
+      } else {
+        setUsers(await getUserByChannelId(channel.id, false));
+      }
     };
     fetchUsers();
 
@@ -29,21 +36,29 @@ export function ShowUser({ channel }) {
     };
   }, [channel]);
 
+  async function privateMessage(userSend) {
+    try {
+      chooseChannel(await getPrivateChannel(user.id, userSend.id));
+    } catch (error) {}
+  }
+
   return (
     <div className={`${styles.container}`}>
       <ul>
-        {users.map((user) => (
-          <li key={user.id} className="d-flex">
+        {users.map((u) => (
+          <li
+            key={u.id}
+            className="d-flex"
+            onClick={u.id === user.id ? () => {} : () => privateMessage(u)}
+          >
             <div
               className={`d-flex justify-content-center align-item-center mr10`}
             >
               <span
-                className={`dot ${
-                  user.connected ? "bgColorGreen" : "bgColorRed"
-                }`}
+                className={`dot ${u.connected ? "bgColorGreen" : "bgColorRed"}`}
               ></span>
             </div>
-            {user.pseudo}
+            {u.pseudo}
           </li>
         ))}
       </ul>

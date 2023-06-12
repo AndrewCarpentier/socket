@@ -5,41 +5,52 @@ function Socket(io) {
   const { clearInterval } = require("timers");
   let interval;
 
-  io.on("connection", (socket) => {
+  io.on("connection", async (socket) => {
     const user = new User();
     const message = new Message();
-
-    console.log("user connected");
-    console.log(socket)
+    await user.getUserById(socket.handshake.query.idUser);
+    console.log("user connected", socket.id);
     user.connectedSocket(socket.id, socket.handshake.query.idUser);
+    
+    user.privateChannelList.forEach((channel)=>{
+      socket.on(channel.id + "privateMessage", async(e)=>{
+        if (await message.add(e.message, user.id, false, e.idChannel, true)) {
+          socket.emit(channel.id + "privateMessage", { user: user, message: e.message, gif: false });
+          socket.broadcast.emit(channel.id + "privateMessage", {
+            user: user,
+            message: e.message,
+            gif: false,
+          });
+        }
+      })
+    })
+    user.channelList.forEach((channel) => {
+      socket.on(channel.id + "message", async (e) => {
+        if (await message.add(e.message, user.id, false, e.idChannel, false)) {
+          socket.emit(channel.id + "message", { user: user, message: e.message, gif: false });
+          socket.broadcast.emit(channel.id + "message", {
+            user: user,
+            message: e.message,
+            gif: false,
+          });
+        }
+      });
+
+      socket.on(channel.id + "gif", async (e) => {
+        if (message.add(e.message, user.id, true, e.idChannel, false)) {
+          socket.emit(channel.id + "message", { user: user, message: e.message, gif: true });
+          socket.broadcast.emit(channel.id + "message", {
+            user: user,
+            message: e.message,
+            gif: true,
+          });
+        }
+      });
+    });
 
     socket.on("newConnection", () => {
       socket.emit("newConnection", "");
       socket.broadcast.emit("newConnection", "");
-    });
-
-    socket.on("message", async (e) => {
-      if (message.add(e.message, e.idUser, false, 1)) {
-        await user.getUserById(e.idUser);
-        socket.emit("message", { user: user, message: e.message, gif: false });
-        socket.broadcast.emit("message", {
-          user: user,
-          message: e.message,
-          gif: false,
-        });
-      }
-    });
-
-    socket.on("gif", async (e) => {
-      if (message.add(e.message, e.idUser, true, 1)) {
-        await user.getUserById(e.idUser);
-        socket.emit("message", { user: user, message: e.message, gif: true });
-        socket.broadcast.emit("message", {
-          user: user,
-          message: e.message,
-          gif: true,
-        });
-      }
     });
 
     socket.on("write", async (idUser) => {
@@ -72,5 +83,7 @@ function Socket(io) {
     e.socket.broadcast.emit("write", e.user);
   };
 }
+
+
 
 module.exports = Socket;

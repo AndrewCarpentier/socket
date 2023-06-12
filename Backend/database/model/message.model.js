@@ -34,11 +34,11 @@ class Message {
     });
   }
 
-  static getMessageByIdChannel(idChannel){
+  static getMessageByIdChannel(idChannel, privateBool){
     const user = new User();
     return new Promise((resolve, reject)=>{
       try {
-        connection.query('SELECT * FROM message WHERE idChannel = ?', [idChannel], async(err, result)=>{
+        connection.query('SELECT * FROM message WHERE idChannel = ? AND private = ?', [idChannel, privateBool], async(err, result)=>{
           if(err) throw err;
           if(result.length > 0){
             await Promise.all(
@@ -57,12 +57,12 @@ class Message {
     })
   }
 
-  add(message, idUser, gif, idChannel) {
+  add(message,idUser, gif, idChannel, privateBool) {
     return new Promise((resolve, reject) => {
       try {
         connection.query(
-          "INSERT INTO message (message, creationDate, idUser, gif, idChannel) VALUES (?,now(),?, ?, ?)",
-          [message, idUser, gif, idChannel],
+          "INSERT INTO message (message, creationDate, idUser, gif, idChannel, private) VALUES (?,now(),?, ?, ?, ?)",
+          [message, idUser, gif, idChannel, privateBool],
           (err, result) => {
             if (err) throw err;
             if (result.affectedRows === 1) {

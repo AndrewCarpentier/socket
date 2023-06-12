@@ -1,5 +1,5 @@
 const User = require("../../database/model/user.model");
-const Channel = require('../../database/model/channel.model');
+const Channel = require("../../database/model/channel.model");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 
@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
     if (!(await user.verifyIfMailAlreadyExist(email))) {
       if (!(await user.verifyIfPseudoAlreadyExist(pseudo))) {
         if (await user.add(email, pseudo, hashPassword)) {
-          Channel.addUserInChannel(user.id, 1)
+          Channel.addUserInChannel(user.id, 1);
           res.json(true);
         } else {
           res.status(400).json("API error");
@@ -27,9 +27,15 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get('/getUsersByChannelId/:idChannel', async(req,res)=>{
-  const {idChannel} = req.params;
-  res.json(await User.getUsersByChannelId(idChannel));
-})
+router.get("/getUsersByChannelId/:idChannel", async (req, res) => {
+  const { idChannel } = req.params;
+  const { private } = req.query;
+  console.log({private});
+  if (private === "true") {
+    res.json(await User.getUsersByPrivateChannelId(idChannel));
+  } else {
+    res.json(await User.getUsersByChannelId(idChannel));
+  }
+});
 
 module.exports = router;

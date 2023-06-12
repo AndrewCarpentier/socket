@@ -7,10 +7,19 @@ class User {
     this.pseudo = null;
     this.password = null;
     this.connected = null;
+    this.channelList = null;
+    this.privateChannelList = null;
   }
 
   get getUserWithoutPassword() {
-    return { id: this.id, email: this.email, pseudo: this.pseudo };
+    return {
+      id: this.id,
+      email: this.email,
+      pseudo: this.pseudo,
+      connected: this.connected,
+      channelList: this.channelList,
+      privateChannelList: this.privateChannelList,
+    };
   }
 
   add(email, pseudo, password) {
@@ -44,16 +53,28 @@ class User {
               this.pseudo = result[0].pseudo;
               this.email = result[0].email;
               this.password = result[0].password;
-              resolve({
-                id: this.id,
-                pseudo: this.pseudo,
-                email: this.email,
-                password: this.password,
-              });
+              this.connected = result[0].idSocket != "";
             } else {
               this.id = 0;
               resolve({ id: 0 });
             }
+          }
+        );
+        connection.query(
+          "SELECT c.* FROM channel c INNER JOIN user_channel uc ON uc.idChannel = c.id WHERE uc.idUser = ?",
+          [id],
+          (err, result) => {
+            if (err) throw err;
+            this.channelList = result;
+          }
+        );
+        connection.query(
+          "SELECT * FROM private_channel WHERE idUser = ? OR idUser2 = ?",
+          [id, id],
+          (err, result) => {
+            if (err) throw err;
+            this.privateChannelList = result;
+            resolve(this);
           }
         );
       } catch (error) {
@@ -88,6 +109,32 @@ class User {
     });
   }
 
+  static getUsersByPrivateChannelId(idChannel) {
+    return new Promise((resolve, reject) => {
+      try {
+        connection.query(
+          "SELECT u.id, u.pseudo, u.email, u.idSocket FROM private_channel pc INNER JOIN user u ON u.id = pc.idUser OR u.id = pc.idUser2 WHERE pc.id = ?",
+          [idChannel],
+          async (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+              await Promise.all(
+                result.map(async (e) => {
+                  e.connected = e.idSocket != "";
+                  delete e.idSocket;
+                  return e;
+                })
+              );
+            }
+            resolve(result);
+          }
+        );
+      } catch (error) {
+        reject("API error");
+      }
+    });
+  }
+
   getUserByMail(email) {
     return new Promise((resolve, reject) => {
       try {
@@ -101,16 +148,28 @@ class User {
               this.pseudo = result[0].pseudo;
               this.email = result[0].email;
               this.password = result[0].password;
-              resolve({
-                id: this.id,
-                pseudo: this.pseudo,
-                email: this.email,
-                password: this.password,
-              });
+              this.connected = result[0].idSocket != "";
             } else {
               this.id = 0;
               resolve({ id: 0 });
             }
+          }
+        );
+        connection.query(
+          "SELECT c.* FROM channel c INNER JOIN user_channel uc ON uc.idChannel = c.id INNER JOIN user u ON u.id = uc.idUser WHERE u.email = ?",
+          [email],
+          (err, result) => {
+            if (err) throw err;
+            this.channelList = result;
+          }
+        );
+        connection.query(
+          "SELECT * FROM private_channel WHERE idUser = ? OR idUser2 = ?",
+          [this.id, this.id],
+          (err, result) => {
+            if (err) throw err;
+            this.privateChannelList = result;
+            resolve(this);
           }
         );
       } catch (error) {
@@ -126,7 +185,7 @@ class User {
           "UPDATE user SET idSocket = ? WHERE id = ?",
           [idSocket, idUser],
           (err, result) => {
-            if(err) throw err;
+            if (err) throw err;
             resolve(result.affectedRows === 1);
           }
         );
@@ -136,17 +195,21 @@ class User {
     });
   }
 
-  disconnectedSocket(idUser){
-    return new Promise((resolve, reject)=>{
+  disconnectedSocket(idUser) {
+    return new Promise((resolve, reject) => {
       try {
-        connection.query("UPDATE user SET idSocket = '' WHERE id = ?", [idUser], (err,result)=>{
-          if(err) throw err;
-          resolve(result.affectedRows === 1);
-        })
+        connection.query(
+          "UPDATE user SET idSocket = '' WHERE id = ?",
+          [idUser],
+          (err, result) => {
+            if (err) throw err;
+            resolve(result.affectedRows === 1);
+          }
+        );
       } catch (error) {
-        reject('API error')
+        reject("API error");
       }
-    })
+    });
   }
 
   verifyIfMailAlreadyExist(email) {

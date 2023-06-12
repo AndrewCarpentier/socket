@@ -7,12 +7,11 @@ import GifPicker from "gif-picker-react";
 
 const TENOR_API_KEY = "AIzaSyBLXlrIIzpnxN57sLl2rv7AJg-J5Hpg-Ws";
 
-export function MyForm() {
+export function MyForm({ channel }) {
   const { user } = useContext(AuthContext);
   const message = useRef();
   const [values, setValues] = useState("");
   const [showGifPicker, setShowGifPicker] = useState(false);
-
   useEffect(() => {
     socket.on("write", (values) => {
       setValues(values);
@@ -25,13 +24,24 @@ export function MyForm() {
 
   function submit(e) {
     e.preventDefault();
-    if (message.current.value !== "") {
-      socket.emit("message", {
-        idUser: user.id,
-        message: message.current.value,
-      });
-      document.getElementById("input").value = "";
+    if (channel) {
+      if (channel.privateMessage) {
+        if (message.current.value !== "") {
+          socket.emit(channel.id + "privateMessage", {
+            message: message.current.value,
+            idChannel: channel.id,
+          });
+        }
+      } else {
+        if (message.current.value !== "") {
+          socket.emit(channel.id + "message", {
+            message: message.current.value,
+            idChannel: channel.id,
+          });
+        }
+      }
     }
+    document.getElementById("input").value = "";
   }
 
   function onFocus() {
@@ -47,7 +57,7 @@ export function MyForm() {
   }
 
   function onGifClick(e) {
-    socket.emit("gif", { idUser: user.id, message: e.url });
+    socket.emit(channel.id + "gif", { message: e.url, idChannel: channel.id });
     setShowGifPicker(false);
   }
 

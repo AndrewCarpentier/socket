@@ -4,17 +4,10 @@
     width: 150px;
     height: 100%;
     padding: 10px;
-
+    position: fixed;
+    right: 0;
     li{
         padding: 5px;
+        cursor: pointer;
     }
-
-    
-}
-
-.dot{
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    background-color: var(--white);
 }
