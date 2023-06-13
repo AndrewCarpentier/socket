@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { getPrivateChannel } from "../../api/Channel";
 
 export function ShowUser({ channel, chooseChannel }) {
-  const { user } = useContext(AuthContext);
+  const { user, getCurrent } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -39,6 +39,8 @@ export function ShowUser({ channel, chooseChannel }) {
   async function privateMessage(userSend) {
     try {
       chooseChannel(await getPrivateChannel(user.id, userSend.id));
+      socket.emit('resetChannel', "");
+      getCurrent();
     } catch (error) {}
   }
 

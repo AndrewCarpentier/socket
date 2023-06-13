@@ -7,7 +7,6 @@ export async function login(credentials) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
   });
-
   const backResponse = await response.json();
   if (response.ok) {
     return backResponse;

@@ -4,8 +4,9 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 
 router.post("/", async (req, res) => {
-  const { email, pseudo, password, passwordConfirm } = req.query;
+  const { email, pseudo, password, passwordConfirm } = req.body;
   const hashPassword = await bcrypt.hash(password, 10);
+  console.log(email, pseudo, hashPassword)
   const user = new User();
   if (password === passwordConfirm) {
     if (!(await user.verifyIfMailAlreadyExist(email))) {

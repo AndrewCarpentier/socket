@@ -8,15 +8,23 @@ class Channel {
     this.privateMessage = null;
   }
 
-  static addChannel(name) {
+  static addChannel(name, idUser) {
     return new Promise((resolve, reject) => {
       try {
         connection.query(
-          "INSERT INTO channel (name) VALUES (?)",
-          [name],
+          "INSERT INTO channel (name, idUser) VALUES (?, ?)",
+          [name, idUser],
           (err, result) => {
             if (err) throw err;
-            resolve(result.affectedRows === 1);
+            const idChannel = result.insertId;
+            if(result.affectedRows === 1){
+              connection.query("INSERT INTO user_channel (idUser, idChannel) VALUES (?,?)", [idUser, idChannel], (err, result)=>{
+                if(err) throw err;
+                resolve(result.affectedRows === 1);
+              })
+            }else{
+              resolve(false);
+            }
           }
         );
       } catch (error) {
@@ -42,6 +50,28 @@ class Channel {
     });
   }
 
+  static verifyChannelExist(name){
+    return new Promise((resolve,reject)=>{
+      try {
+        connection.query("SELECT * FROM channel", (err, result)=>{
+          if(err) throw err;
+          if(result.length > 0){
+            result.forEach(e => {
+              if(e.name.toLowerCase() === name.toLowerCase()){
+                resolve(true);
+              }
+            });
+            resolve(false);
+          }else{
+            resolve(false);
+          }
+        })
+      } catch (error) {
+        reject("API error")
+      }
+    })
+  }
+
   static verifyPrivateMessageChannelExist(idUser, idUser2) {
     return new Promise((resolve, reject) => {
       try {
@@ -60,11 +90,7 @@ class Channel {
           [idUser2, idUser],
           (err, result) => {
             if (err) throw err;
-            if (result.length > 0) {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
+            resolve(result.length > 0)
           }
         );
       } catch (error) {
