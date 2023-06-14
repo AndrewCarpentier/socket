@@ -48,4 +48,13 @@ router.post("/create", async (req, res) => {
   }
 });
 
+router.get('/all', async(req,res)=>{
+  res.json(await Channel.getChannels());
+})
+
+router.post('/joinChannel', async(req, res)=>{
+  const {idUser, idChannel} = req.body;
+  res.json(await Channel.joinChannel(idUser, idChannel));
+})
+
 module.exports = router;

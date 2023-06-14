@@ -8,6 +8,7 @@ export function ShowChannel({
   onShowAddChannel,
   reset,
   setReset,
+  onShowMessages,
 }) {
   const { user } = useContext(AuthContext);
   const [channels, setChannels] = useState([]);
@@ -27,11 +28,16 @@ export function ShowChannel({
     }
   }, [user, reset, setReset]);
 
+  function onChooseChannel(channel) {
+    chooseChannel(channel);
+    onShowMessages(true);
+  }
+
   return (
     <div className={`${styles.container}`}>
       <ul>
         {channels.map((channel) => (
-          <li key={channel.id} onClick={() => chooseChannel(channel)}>
+          <li key={channel.id} onClick={() => onChooseChannel(channel)}>
             {channel.name}
           </li>
         ))}
@@ -40,6 +46,12 @@ export function ShowChannel({
           onClick={() => onShowAddChannel()}
         >
           <i className={`${styles.icon} fas fa-plus-circle`}></i>
+        </li>
+        <li
+          className="d-flex justify-content-center"
+          onClick={() => onShowMessages(false)}
+        >
+          <i className={`${styles.icon} fas fa-compass`}></i>
         </li>
       </ul>
     </div>

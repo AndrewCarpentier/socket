@@ -7,6 +7,7 @@ import { ShowMessage } from "../../components/ShowMessage/ShowMessage";
 import { ShowChannel } from "../../components/ShowChannel/ShowChannel";
 import { ShowUser } from "../../components/ShowUser/ShowUser";
 import { AddChannel } from "../../components/AddChannel/AddChannel";
+import { ShowChannelList } from "../../components/ShowChannelList/ShowChannelList.";
 
 export function Message() {
   const { user } = useContext(AuthContext);
@@ -14,7 +15,9 @@ export function Message() {
   const [userIdSendToSocket, setUserIdSendToSocket] = useState(false);
   const [showAddChannel, setShowAddChannel] = useState(false);
   const [resetChannels, setResetChannels] = useState(false);
+  const [showMessages, setShowMessages] = useState(true);
 
+  console.log(user);
   useEffect(() => {
     if (user) {
       if (!userIdSendToSocket) {
@@ -49,18 +52,30 @@ export function Message() {
           reset={resetChannels}
           chooseChannel={setChannel}
           onShowAddChannel={onShowAddChannel}
+          onShowMessages={setShowMessages}
         />
       </div>
-      <div className={styles.message}>
-        {channel && <ShowMessage channel={channel} />}
-      </div>
+      {showMessages ? (
+        <div>
+          <div className={styles.message}>
+            {channel && <ShowMessage channel={channel} />}
+          </div>
+        </div>
+      ) : (
+        <ShowChannelList />
+      )}
       <div>
-        {channel && <ShowUser channel={channel} chooseChannel={setChannel} />}
+        {channel && showMessages && <ShowUser channel={channel} chooseChannel={setChannel} />}
       </div>
       <div className={`d-flex ${styles.form}`}>
         <MyForm channel={channel} />
       </div>
-      {showAddChannel && <AddChannel onShowAddChannel={onShowAddChannel} resetChannel={setResetChannels} />}
+      {showAddChannel && (
+        <AddChannel
+          onShowAddChannel={onShowAddChannel}
+          resetChannel={setResetChannels}
+        />
+      )}
     </div>
   );
 }

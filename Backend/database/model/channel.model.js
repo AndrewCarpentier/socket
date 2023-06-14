@@ -178,6 +178,32 @@ class Channel {
     });
   }
 
+  static getChannels(){
+    return new Promise((resolve, reject)=>{
+      try {
+        connection.query("SELECT * FROM channel", (err, result)=>{
+          if(err) throw err;
+          resolve(result);
+        })
+      } catch (error) {
+        reject('API error')
+      }
+    })
+  }
+
+  static joinChannel(idUser, idChannel){
+    return new Promise((resolve, reject)=>{
+      try {
+        connection.query("INSERT INTO user_channel (idUser, idChannel) VALUES (?,?)", [idUser, idChannel], (err, result)=>{
+          if(err) throw err;
+          resolve(result.affectedRows === 1);
+        })
+      } catch (error) {
+        reject("API error");
+      }
+    })
+  }
+
   static addUserInChannel(idUser, idChannel) {
     return new Promise((resolve, reject) => {
       try {
