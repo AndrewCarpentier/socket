@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { getChannels, joinChannel } from "../../api/Channel";
 import { socket } from "../../socket";
 
-export function ShowChannelList() {
+export function ShowChannelList({setReset}) {
   const { user, getCurrent } = useContext(AuthContext);
   const [channels, setChannels] = useState([]);
 
@@ -27,7 +27,6 @@ export function ShowChannelList() {
   async function onJoinChannel(idChannel) {
     if (joinChannel(user.id, idChannel)) {
       socket.emit('addNewChannel', {private : false, channelId : idChannel})
-      // socket.emit("resetChannel", "");
       await getCurrent();
       const tab = [];
       channels.forEach(c => {
@@ -37,6 +36,7 @@ export function ShowChannelList() {
         tab.push(c)
       })
       setChannels(tab);
+      setReset(true)
     }
   }
 

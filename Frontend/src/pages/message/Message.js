@@ -16,6 +16,7 @@ export function Message() {
   const [showAddChannel, setShowAddChannel] = useState(false);
   const [resetChannels, setResetChannels] = useState(false);
   const [showMessages, setShowMessages] = useState(true);
+  const [resetNewChannel, setResetNewChannel] = useState(false);
 
   console.log(user);
   useEffect(() => {
@@ -58,11 +59,11 @@ export function Message() {
       {showMessages ? (
         <div>
           <div className={styles.message}>
-            {channel && <ShowMessage channel={channel} />}
+            {channel && <ShowMessage channel={channel} reset={resetNewChannel} setReset={setResetNewChannel} />}
           </div>
         </div>
       ) : (
-        <ShowChannelList />
+        <ShowChannelList setReset={setResetNewChannel}  />
       )}
       <div>
         {channel && showMessages && <ShowUser channel={channel} chooseChannel={setChannel} />}

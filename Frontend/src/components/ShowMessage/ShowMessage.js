@@ -6,10 +6,9 @@ import * as moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
 
 moment.locale("fr");
-export function ShowMessage({ channel }) {
+export function ShowMessage({ channel, reset, setReset }) {
   const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
-
   useEffect(() => {
     const fetchMessage = async () => {
       let messages;
@@ -44,6 +43,27 @@ export function ShowMessage({ channel }) {
           date: date.toString(),
         },
       ]);
+    }
+    if(reset){
+      user.channelList.forEach((e) => {
+        socket.on(e.id + "message", onMessage);
+      });
+  
+      user.privateChannelList.forEach((e) => {
+        socket.on(e.id + "privateMessage", onMessage);
+      });
+  
+      return () => {
+        user.channelList.forEach((e) => {
+          socket.off(e.id + "message", onMessage);
+        });
+  
+        user.privateChannelList.forEach((e) => {
+          socket.off(e.id + "privateMessage", onMessage);
+        });
+      };
+
+      setReset(false);
     }
 
     user.channelList.forEach((e) => {
