@@ -48,7 +48,7 @@ export function ShowChannel({
           <i className={`${styles.icon} fas fa-plus-circle`}></i>
         </li>
         <li
-          className="d-flex justify-content-center"
+          className={`d-flex justify-content-center ${styles.compass}`}
           onClick={() => onShowMessages(false)}
         >
           <i className={`${styles.icon} fas fa-compass`}></i>
