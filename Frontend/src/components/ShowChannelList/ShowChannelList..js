@@ -5,7 +5,7 @@ import { getChannels, joinChannel } from "../../api/Channel";
 import { socket } from "../../socket";
 
 export function ShowChannelList() {
-  const { user } = useContext(AuthContext);
+  const { user, getCurrent } = useContext(AuthContext);
   const [channels, setChannels] = useState([]);
 
   useEffect(() => {
@@ -19,16 +19,24 @@ export function ShowChannelList() {
           return c;
         });
       });
-      console.log(channelsGet);
       setChannels(channelsGet);
     };
     fetchChannels();
   }, [user]);
 
-  function onJoinChannel(idChannel) {
+  async function onJoinChannel(idChannel) {
     if (joinChannel(user.id, idChannel)) {
-      console.log("success");
-      socket.emit("resetChannel", "");
+      socket.emit('addNewChannel', {private : false, channelId : idChannel})
+      // socket.emit("resetChannel", "");
+      await getCurrent();
+      const tab = [];
+      channels.forEach(c => {
+        if(c.alreadyJoin !== true){
+          c.alreadyJoin = c.id === idChannel;
+        }
+        tab.push(c)
+      })
+      setChannels(tab);
     }
   }
 

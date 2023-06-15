@@ -38,9 +38,18 @@ export function ShowUser({ channel, chooseChannel }) {
 
   async function privateMessage(userSend) {
     try {
-      chooseChannel(await getPrivateChannel(user.id, userSend.id));
-      socket.emit('resetChannel', "");
-      getCurrent();
+      const channel = await getPrivateChannel(user.id, userSend.id);
+      chooseChannel(channel);
+      
+      if (
+        user.privateChannelList.filter(
+          (e) => e.idUser2 === userSend.id || e.idUser === userSend.id
+        ).length === 0
+      ) {
+        console.log("test")
+        socket.emit("addNewChannel", { private: true, channelId: channel.id });
+        getCurrent();
+      }
     } catch (error) {}
   }
 

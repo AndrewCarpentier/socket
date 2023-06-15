@@ -8,10 +8,10 @@ function Socket(io) {
   io.on("connection", async (socket) => {
     const user = new User();
     await user.getUserById(socket.handshake.query.idUser);
-    console.log("user connected", socket.id);
+    console.log(user.pseudo + " connected", socket.id);
     user.connectedSocket(socket.id, socket.handshake.query.idUser);
 
-    resetSocketList(user, socket);
+    initSocketList(user, socket);
 
     socket.on("newConnection", () => {
       socket.emit("newConnection", "");
@@ -20,7 +20,6 @@ function Socket(io) {
 
     socket.on("write", async (idUser) => {
       await user.getUserById(idUser);
-      console.log(user);
       if (interval) {
         clearInterval(interval);
       }
@@ -36,16 +35,21 @@ function Socket(io) {
     });
 
     socket.on("disconnect", () => {
-      console.log("user disconnect");
+      console.log(user.pseudo + " disconnect");
       user.disconnectedSocket(socket.handshake.query.idUser);
       clearInterval(interval);
       socket.emit("disconnection", "");
       socket.broadcast.emit("disconnection", "");
     });
 
-    socket.on("resetChannel", async () => {
+    socket.on("addNewChannel", async (e) => {
+      console.log(e);
       await user.getUserById(socket.handshake.query.idUser);
-      resetSocketList(user, socket);
+      if (e.private) {
+        addNewPrivateChannel(socket, e.channelId, user);
+      } else {
+        addNewChannel(socket, e.channelId, user);
+      }
     });
   });
 
@@ -53,12 +57,81 @@ function Socket(io) {
     e.socket.broadcast.emit("write", e.user);
   };
 
-  function resetSocketList(user, socket) {
+  function addNewChannel(socket, channelId, user) {
+    const message = new Message();
+    socket.on(channelId + "message", async (e) => {
+      console.log(e)
+      if (await message.add(e.message, user.id, false, e.idChannel, false)) {
+        socket.emit(channelId + "message", {
+          user: user,
+          message: e.message,
+          gif: false,
+        });
+        socket.broadcast.emit(channelId + "message", {
+          user: user,
+          message: e.message,
+          gif: false,
+        });
+      }
+    });
+
+    socket.on(channelId + "gif", async (e) => {
+      console.log(e)
+
+      if (message.add(e.message, user.id, true, e.idChannel, false)) {
+        socket.emit(channelId + "message", {
+          user: user,
+          message: e.message,
+          gif: true,
+        });
+        socket.broadcast.emit(channelId + "message", {
+          user: user,
+          message: e.message,
+          gif: true,
+        });
+      }
+    });
+  }
+
+  function addNewPrivateChannel(socket, channelId, user) {
+    const message = new Message();
+
+    socket.on(channelId + "privateMessage", async (e) => {
+      if (await message.add(e.message, user.id, false, e.idChannel, true)) {
+        socket.emit(channelId + "privateMessage", {
+          user: user,
+          message: e.message,
+          gif: false,
+        });
+        socket.broadcast.emit(channelId + "privateMessage", {
+          user: user,
+          message: e.message,
+          gif: false,
+        });
+      }
+    });
+
+    socket.on(channelId + "privateGif", async (e) => {
+      if (message.add(e.message, user.id, true, e.idChannel, true)) {
+        socket.emit(channelId + "privateMessage", {
+          user: user,
+          message: e.message,
+          gif: true,
+        });
+        socket.broadcast.emit(channelId + "privateMessage", {
+          user: user,
+          message: e.message,
+          gif: true,
+        });
+      }
+    });
+  }
+
+  function initSocketList(user, socket) {
     const message = new Message();
 
     user.privateChannelList.forEach((channel) => {
       socket.on(channel.id + "privateMessage", async (e) => {
-        console.log(user);
         if (await message.add(e.message, user.id, false, e.idChannel, true)) {
           socket.emit(channel.id + "privateMessage", {
             user: user,
