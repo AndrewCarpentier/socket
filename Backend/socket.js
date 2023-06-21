@@ -53,10 +53,12 @@ function Socket(io) {
     });
   });
 
+  // Function to handle peopleWrite event
   const peopleWrite = (e) => {
     e.socket.broadcast.emit("write", e.user);
   };
 
+  // Function to add event handlers for a new channel
   function addNewChannel(socket, channelId, user) {
     const message = new Message();
     socket.on(channelId + "message", async (e) => {
@@ -93,6 +95,7 @@ function Socket(io) {
     });
   }
 
+  // Function to add event handlers for a new private channel
   function addNewPrivateChannel(socket, channelId, user) {
     const message = new Message();
 
@@ -127,6 +130,7 @@ function Socket(io) {
     });
   }
 
+  // Function to initialize event handlers for existing channels and private channels
   function initSocketList(user, socket) {
     const message = new Message();
 

@@ -18,7 +18,6 @@ export function Message() {
   const [showMessages, setShowMessages] = useState(true);
   const [resetNewChannel, setResetNewChannel] = useState(false);
 
-  console.log(user);
   useEffect(() => {
     if (user) {
       if (!userIdSendToSocket) {

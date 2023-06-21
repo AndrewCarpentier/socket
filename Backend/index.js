@@ -10,6 +10,7 @@ const app = express();
 
 const server = http.createServer(app);
 
+// Initialize Socket.io with the created HTTP server
 const io = socketIo(server, {
   cors: {
     origin: "*",
@@ -17,7 +18,9 @@ const io = socketIo(server, {
   },
 });
 
+// Import a custom module for socket handling
 const Socket = require('./socket');
+// Initialize sockets using the Socket.io instance
 Socket(io);
 
 require("./database");
