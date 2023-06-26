@@ -10,7 +10,7 @@ export function ShowMessage({ channel, reset, setReset }) {
   const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
 
-
+  console.log(channel)
   useEffect(() => {
     const fetchMessage = async () => {
       setMessages([])

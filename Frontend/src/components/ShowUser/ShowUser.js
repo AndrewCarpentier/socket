@@ -40,7 +40,7 @@ export function ShowUser({ channel, chooseChannel }) {
     try {
       const channel = await getPrivateChannel(user.id, userSend.id);
       chooseChannel(channel);
-      
+
       if (
         user.privateChannelList.filter(
           (e) => e.idUser2 === userSend.id || e.idUser === userSend.id
@@ -68,7 +68,12 @@ export function ShowUser({ channel, chooseChannel }) {
                 className={`dot ${u.connected ? "bgColorGreen" : "bgColorRed"}`}
               ></span>
             </div>
-            {u.pseudo}
+            {u.pseudo}{" "}
+            {u.id === channel.idUser && (
+              <i
+                className={`fas fa-crown ml10 ${styles.crown} d-flex align-item-center`}
+              />
+            )}
           </li>
         ))}
       </ul>
