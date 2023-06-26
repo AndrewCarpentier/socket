@@ -38,4 +38,11 @@ router.get("/getUsersByChannelId/:idChannel", async (req, res) => {
   }
 });
 
+router.get("/getUserById/:id", async(req, res)=>{
+  const {id} = req.params;
+  const user = new User();
+  await user.getUserById(id);
+  res.json(user);
+})
+
 module.exports = router;

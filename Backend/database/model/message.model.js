@@ -34,30 +34,35 @@ class Message {
     });
   }
 
-  static getMessageByIdChannel(idChannel, privateBool){
+  static getMessageByIdChannel(idChannel, privateBool) {
     const user = new User();
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
       try {
-        connection.query('SELECT * FROM message WHERE idChannel = ? AND private = ?', [idChannel, privateBool], async(err, result)=>{
-          if(err) throw err;
-          if(result.length > 0){
-            await Promise.all(
-              result.map(async (e)=>{
-                e.user = await user.getUserById(e.idUser);
-                delete e.idUser;
-                return e;
-              })
-            )
+        connection.query(
+          "SELECT * FROM message WHERE idChannel = ? AND private = ?",
+          [idChannel, privateBool],
+          async (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+              await Promise.all(
+                result.map(async (e) => {
+                  e.user = await User.getUserByIdStatic(e.idUser);
+                  delete e.idUser;
+                  console.log(e)
+                  return e;
+                })
+              );
+            }
+            resolve(result);
           }
-          resolve(result);
-        })
+        );
       } catch (error) {
-        reject('Error api');
+        reject("Error api");
       }
-    })
+    });
   }
 
-  add(message,idUser, gif, idChannel, privateBool) {
+  add(message, idUser, gif, idChannel, privateBool) {
     return new Promise((resolve, reject) => {
       try {
         connection.query(

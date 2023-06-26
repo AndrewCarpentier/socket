@@ -83,6 +83,17 @@ class User {
     });
   }
 
+  static getUserByIdStatic(id) {
+    const user = new User();
+    return new Promise((resolve, reject) => {
+      try {
+        resolve(user.getUserById(id));
+      } catch (error) {
+        reject("API error");
+      }
+    });
+  }
+
   static getUsersByChannelId(idChannel) {
     return new Promise((resolve, reject) => {
       try {

@@ -4,6 +4,7 @@ import { socket } from "../../socket";
 import { getMessageByIdChannel } from "../../api/Message";
 import * as moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
+import { getUserById } from "../../api/User";
 
 moment.locale("fr");
 export function ShowMessage({ channel, reset, setReset }) {
@@ -17,8 +18,8 @@ export function ShowMessage({ channel, reset, setReset }) {
       } else {
         messages = await getMessageByIdChannel(channel.id, false);
       }
-      setMessages([]);
-      messages.map((message) =>
+      console.log(messages);
+      messages.map(async (message) => {
         setMessages((prev) => [
           ...prev,
           {
@@ -27,8 +28,8 @@ export function ShowMessage({ channel, reset, setReset }) {
             gif: Boolean(message.gif),
             date: moment(message.creationDate).fromNow().toString(),
           },
-        ])
-      );
+        ]);
+      });
     };
     fetchMessage();
 
@@ -44,20 +45,20 @@ export function ShowMessage({ channel, reset, setReset }) {
         },
       ]);
     }
-    if(reset){
+    if (reset) {
       user.channelList.forEach((e) => {
         socket.on(e.id + "message", onMessage);
       });
-  
+
       user.privateChannelList.forEach((e) => {
         socket.on(e.id + "privateMessage", onMessage);
       });
-  
+
       return () => {
         user.channelList.forEach((e) => {
           socket.off(e.id + "message", onMessage);
         });
-  
+
         user.privateChannelList.forEach((e) => {
           socket.off(e.id + "privateMessage", onMessage);
         });
