@@ -46,7 +46,6 @@ export function ShowUser({ channel, chooseChannel }) {
           (e) => e.idUser2 === userSend.id || e.idUser === userSend.id
         ).length === 0
       ) {
-        console.log("test")
         socket.emit("addNewChannel", { private: true, channelId: channel.id });
         getCurrent();
       }

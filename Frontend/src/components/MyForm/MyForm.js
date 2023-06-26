@@ -14,7 +14,6 @@ export function MyForm({ channel }) {
   const [showGifPicker, setShowGifPicker] = useState(false);
   useEffect(() => {
     socket.on("write", (values) => {
-      console.log(values)
       setValues(values);
     });
 
@@ -42,11 +41,16 @@ export function MyForm({ channel }) {
         }
       }
     }
+    socket.emit("stopWrite", "");
     document.getElementById("input").value = "";
   }
 
-  function onFocus() {
-    socket.emit("write", user.id);
+  function onChange(e) {
+    if (e.target.value === "") {
+      socket.emit("stopWrite", "");
+    } else {
+      socket.emit("write", user.id);
+    }
   }
 
   function onBlur() {
@@ -95,7 +99,7 @@ export function MyForm({ channel }) {
             className={`${styles.input}`}
             placeholder="Envoyer un message"
             id="input"
-            onFocus={onFocus}
+            onChange={onChange}
             onBlur={onBlur}
             ref={message}
           />

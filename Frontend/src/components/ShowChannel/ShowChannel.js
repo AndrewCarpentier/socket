@@ -2,6 +2,7 @@ import styles from "./ShowChannel.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { getChannelsByIdUser } from "../../api/Channel";
+import { getUserById } from "../../api/User";
 
 export function ShowChannel({
   chooseChannel,
@@ -12,6 +13,7 @@ export function ShowChannel({
 }) {
   const { user } = useContext(AuthContext);
   const [channels, setChannels] = useState([]);
+  const [publicList, setPublicList] = useState(true);
 
   useEffect(() => {
     const fetchChannels = async () => {
@@ -31,6 +33,20 @@ export function ShowChannel({
   function onChooseChannel(channel) {
     chooseChannel(channel);
     onShowMessages(true);
+  }
+
+  function onPublicClick() {
+    setPublicList(true);
+  }
+
+  function onPrivateClick() {
+    setPublicList(false);
+  }
+
+  async function getUser(id) {
+    const x = await getUserById(id);
+    console.log(x);
+    return await x.id.toString();
   }
 
   return (
