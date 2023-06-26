@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 12 juin 2023 à 16:16
+-- Généré le : lun. 26 juin 2023 à 20:24
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -29,17 +29,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `channel` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
+  `name` varchar(255) NOT NULL,
+  `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `channel`
 --
 
-INSERT INTO `channel` (`id`, `name`) VALUES
-(1, 'CDA23'),
-(2, 'test'),
-(3, 'test2');
+INSERT INTO `channel` (`id`, `name`, `idUser`) VALUES
+(1, 'CDA23', 1),
+(2, 'test', 1),
+(3, 'test2', 1),
+(38, 'kxso', 1);
 
 -- --------------------------------------------------------
 
@@ -133,7 +135,15 @@ INSERT INTO `message` (`id`, `message`, `creationDate`, `gif`, `idUser`, `idChan
 (153, 'https://media.tenor.com/XUAONVsG6qIAAAAC/leonardo-dicaprio-clapping.gif', '2023-06-12 16:05:54', 1, 1, 2, 0),
 (154, 'https://media.tenor.com/93e_69nL7JYAAAAC/clap.gif', '2023-06-12 16:11:33', 1, 2, 1, 0),
 (155, 'https://media.tenor.com/XUAONVsG6qIAAAAC/leonardo-dicaprio-clapping.gif', '2023-06-12 16:12:44', 1, 2, 2, 1),
-(156, 'https://media.tenor.com/eakdFd6OoHcAAAAC/frickin-awesome.gif', '2023-06-12 16:12:55', 1, 2, 1, 0);
+(156, 'https://media.tenor.com/eakdFd6OoHcAAAAC/frickin-awesome.gif', '2023-06-12 16:12:55', 1, 2, 1, 0),
+(157, 'fdsqfds', '2023-06-15 01:49:14', 0, 1, 4, 0),
+(158, 'ad', '2023-06-26 14:50:59', 0, 1, 6, 1),
+(159, 'test', '2023-06-26 14:51:01', 0, 1, 6, 1),
+(160, 'test', '2023-06-26 14:54:44', 0, 6, 1, 0),
+(161, 'tst', '2023-06-26 17:20:11', 0, 6, 6, 1),
+(162, 'sd', '2023-06-26 17:20:44', 0, 6, 11, 1),
+(163, 'andrew', '2023-06-26 17:31:32', 0, 1, 6, 1),
+(164, 'test', '2023-06-26 18:46:00', 0, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -157,7 +167,11 @@ INSERT INTO `private_channel` (`id`, `idUser`, `idUser2`) VALUES
 (4, 1, 5),
 (5, 1, 7),
 (6, 1, 6),
-(7, 1, 8);
+(7, 1, 8),
+(8, 6, 3),
+(9, 6, 5),
+(10, 1, 9),
+(11, 6, 9);
 
 -- --------------------------------------------------------
 
@@ -179,9 +193,9 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `email`, `pseudo`, `password`, `idSocket`) VALUES
 (1, 'test@test.fr', 'test', '$2b$10$4DYXf2jMelBy.xBiAEs.bubWh6rq/YZSN/pYPQ0fjOv6amAnns.3i', ''),
-(2, 'test2@test.fr', 'test', '$2b$10$vZ9tyJlfuYztzWYeQfoY1ur1ndE72DGBRVXv19gQLgsdN14qdoAG2', 'FrMa2txjZxeDh0mFAAAD'),
-(3, 'test3@test.fr', 'test', '$2b$10$iYd9CC0HK.HFM44flb/Uku/NRwBa/HIWbybVVgq.Jq2ErEPS/xRIq', ''),
-(5, 'test4@test.fr', 'test', '$2b$10$IGpl5YD8bc6hDQ69z3udv.YGJ7qEKgbXj8BzlFdQtiYpga0phe0Hu', ''),
+(2, 'test2@test.fr', 'test2', '$2b$10$vZ9tyJlfuYztzWYeQfoY1ur1ndE72DGBRVXv19gQLgsdN14qdoAG2', ''),
+(3, 'test3@test.fr', 'test3', '$2b$10$iYd9CC0HK.HFM44flb/Uku/NRwBa/HIWbybVVgq.Jq2ErEPS/xRIq', ''),
+(5, 'test4@test.fr', 'test4', '$2b$10$IGpl5YD8bc6hDQ69z3udv.YGJ7qEKgbXj8BzlFdQtiYpga0phe0Hu', ''),
 (6, 'andrew@gmail.com', 'andrew', '$2b$10$KDJdOeKAcLBu2uvWpoprZ.qHhyizblfcvxA9W2qyJbTJJzpuenfUO', ''),
 (7, 'g@g.f', 'guillaume', '$2b$10$UX7QaYvfTUp25.ZcyUBTye/ko7ESuS7nrKcWX3zeBqWFmGMytNUtO', ''),
 (8, 'tyra@tyra', 'Tyra', '$2b$10$Mt54cwOSAFUPz8In9MxuwOZjTGXZgNsc8kHEM.dFeOPM7Aj1VH.v6', ''),
@@ -205,7 +219,6 @@ CREATE TABLE `user_channel` (
 
 INSERT INTO `user_channel` (`id`, `idUser`, `idChannel`) VALUES
 (1, 1, 1),
-(2, 2, 1),
 (3, 3, 1),
 (4, 5, 1),
 (5, 6, 1),
@@ -213,7 +226,28 @@ INSERT INTO `user_channel` (`id`, `idUser`, `idChannel`) VALUES
 (7, 8, 1),
 (8, 9, 1),
 (9, 1, 2),
-(10, 1, 3);
+(10, 1, 3),
+(11, 1, 4),
+(12, 1, 5),
+(13, 1, 6),
+(14, 1, 10),
+(15, 1, 8),
+(16, 1, 9),
+(17, 1, 11),
+(18, 1, 12),
+(19, 1, 13),
+(20, 1, 14),
+(21, 1, 15),
+(22, 1, 16),
+(23, 1, 17),
+(24, 1, 18),
+(25, 1, 19),
+(26, 1, 20),
+(27, 1, 21),
+(28, 1, 22),
+(29, 1, 23),
+(30, 1, 24),
+(31, 1, 38);
 
 --
 -- Index pour les tables déchargées
@@ -257,19 +291,19 @@ ALTER TABLE `user_channel`
 -- AUTO_INCREMENT pour la table `channel`
 --
 ALTER TABLE `channel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT pour la table `private_channel`
 --
 ALTER TABLE `private_channel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `user`
@@ -281,7 +315,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `user_channel`
 --
 ALTER TABLE `user_channel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
