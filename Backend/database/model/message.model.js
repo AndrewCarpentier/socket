@@ -48,7 +48,6 @@ class Message {
                 result.map(async (e) => {
                   e.user = await User.getUserByIdStatic(e.idUser);
                   delete e.idUser;
-                  console.log(e)
                   return e;
                 })
               );

@@ -2,11 +2,12 @@
   color: var(--white);
   background-color: var(--gray-2900);
   width: 150px;
-  position: fixed;
   height: 100vh;
   overflow: auto;
-
-  
+  @media only screen and (max-width: 600px) {
+    position: absolute;
+    width: 100%;
+  }
 
   h2 {
     text-align: center;
@@ -30,23 +31,23 @@
 }
 
 .container::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  .container::-webkit-scrollbar-track {
-    background: var(--gray-2900);
-  }
-  .container::-webkit-scrollbar-thumb {
-    background: var(--gray-1800);
-  }
-  .container:hover::-webkit-scrollbar-thumb {
-    background: var(--gray-1800);
-  }
-  .container::-webkit-scrollbar-thumb:horizontal:hover,
-  .container::-webkit-scrollbar-thumb:vertical:hover {
-    background: var(--gray-2500);
-  }
-  .container::-webkit-scrollbar-thumb:horizontal:active,
-  .container::-webkit-scrollbar-thumb:vertical:active {
-    background: var(--gray-2500);
-  }
+  width: 10px;
+  height: 10px;
+}
+.container::-webkit-scrollbar-track {
+  background: var(--gray-2900);
+}
+.container::-webkit-scrollbar-thumb {
+  background: var(--gray-1800);
+}
+.container:hover::-webkit-scrollbar-thumb {
+  background: var(--gray-1800);
+}
+.container::-webkit-scrollbar-thumb:horizontal:hover,
+.container::-webkit-scrollbar-thumb:vertical:hover {
+  background: var(--gray-2500);
+}
+.container::-webkit-scrollbar-thumb:horizontal:active,
+.container::-webkit-scrollbar-thumb:vertical:active {
+  background: var(--gray-2500);
+}

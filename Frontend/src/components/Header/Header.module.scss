@@ -1,0 +1,28 @@
+.container {
+  position: fixed;
+  height: 50px;
+  width: 100%;
+  background-color: var(--gray-2900);
+  top: 0;
+  z-index: 99;
+  color: var(--white);
+
+  .information {
+    height: 100%;
+    font-size: 20px;
+    .user {
+      position: absolute;
+      right: 5%;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+    .burger{
+        position: absolute;
+        left: 5%;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+  }
+}

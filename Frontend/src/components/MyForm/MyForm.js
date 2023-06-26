@@ -14,6 +14,7 @@ export function MyForm({ channel }) {
   const [showGifPicker, setShowGifPicker] = useState(false);
   useEffect(() => {
     socket.on("write", (values) => {
+      console.log(values)
       setValues(values);
     });
 

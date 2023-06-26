@@ -4,21 +4,22 @@ import { socket } from "../../socket";
 import { getMessageByIdChannel } from "../../api/Message";
 import * as moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
-import { getUserById } from "../../api/User";
 
 moment.locale("fr");
 export function ShowMessage({ channel, reset, setReset }) {
   const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
+
+
   useEffect(() => {
     const fetchMessage = async () => {
+      setMessages([])
       let messages;
       if (channel.privateMessage) {
         messages = await getMessageByIdChannel(channel.id, true);
       } else {
         messages = await getMessageByIdChannel(channel.id, false);
       }
-      console.log(messages);
       messages.map(async (message) => {
         setMessages((prev) => [
           ...prev,
@@ -63,7 +64,6 @@ export function ShowMessage({ channel, reset, setReset }) {
           socket.off(e.id + "privateMessage", onMessage);
         });
       };
-
       setReset(false);
     }
 
@@ -84,7 +84,8 @@ export function ShowMessage({ channel, reset, setReset }) {
         socket.off(e.id + "privateMessage", onMessage);
       });
     };
-  }, [setMessages, channel, user]);
+
+  }, [setMessages, channel, user, setReset, reset]);
 
   return (
     <ul>

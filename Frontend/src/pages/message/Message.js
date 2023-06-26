@@ -8,6 +8,7 @@ import { ShowChannel } from "../../components/ShowChannel/ShowChannel";
 import { ShowUser } from "../../components/ShowUser/ShowUser";
 import { AddChannel } from "../../components/AddChannel/AddChannel";
 import { ShowChannelList } from "../../components/ShowChannelList/ShowChannelList.";
+import Header from "../../components/Header/Header";
 
 export function Message() {
   const { user } = useContext(AuthContext);
@@ -17,6 +18,8 @@ export function Message() {
   const [resetChannels, setResetChannels] = useState(false);
   const [showMessages, setShowMessages] = useState(true);
   const [resetNewChannel, setResetNewChannel] = useState(false);
+  const [showUserList, setShowUserList] = useState(true);
+  const [showChannelList, setShowChannelList] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -44,28 +47,49 @@ export function Message() {
     setShowAddChannel(!showAddChannel);
   }
 
+  function onShowUserList() {
+    setShowUserList(!showUserList);
+  }
+
+  function onShowChannelList() {
+    setShowChannelList(!showChannelList);
+  }
+
   return (
-    <div className={`${styles.container} d-flex test`}>
+    <div className={`${styles.container} d-flex`}>
+      <Header
+        channel={channel}
+        onShowUserList={onShowUserList}
+        onShowChannelList={onShowChannelList}
+      />
       <div className={styles.ShowChannel}>
-        <ShowChannel
-          setReset={setResetChannels}
-          reset={resetChannels}
-          chooseChannel={setChannel}
-          onShowAddChannel={onShowAddChannel}
-          onShowMessages={setShowMessages}
-        />
+        {showChannelList && (
+          <ShowChannel
+            setReset={setResetChannels}
+            reset={resetChannels}
+            chooseChannel={setChannel}
+            onShowAddChannel={onShowAddChannel}
+            onShowMessages={setShowMessages}
+          />
+        )}
       </div>
       {showMessages ? (
-        <div>
-          <div className={styles.message}>
-            {channel && <ShowMessage channel={channel} reset={resetNewChannel} setReset={setResetNewChannel} />}
-          </div>
+        <div className={styles.message}>
+          {channel && (
+            <ShowMessage
+              channel={channel}
+              reset={resetNewChannel}
+              setReset={setResetNewChannel}
+            />
+          )}
         </div>
       ) : (
-        <ShowChannelList setReset={setResetNewChannel}  />
+        <ShowChannelList setReset={setResetNewChannel} />
       )}
       <div>
-        {channel && showMessages && <ShowUser channel={channel} chooseChannel={setChannel} />}
+        {channel && showMessages && showUserList && (
+          <ShowUser channel={channel} chooseChannel={setChannel} />
+        )}
       </div>
       <div className={`d-flex ${styles.form}`}>
         <MyForm channel={channel} />
