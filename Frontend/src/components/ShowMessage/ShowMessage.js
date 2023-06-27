@@ -4,6 +4,7 @@ import { socket } from "../../socket";
 import { getMessageByIdChannel } from "../../api/Message";
 import * as moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
+import { getChannelsByIdUser } from "../../api/Channel";
 
 moment.locale("fr");
 export function ShowMessage({ channel, reset, setReset }) {
@@ -46,9 +47,14 @@ export function ShowMessage({ channel, reset, setReset }) {
       ]);
     }
     if (reset) {
-      user.channelList.forEach((e) => {
-        socket.on(e.id + "message", onMessage);
-      });
+      const channel = async () => {
+        await getChannelsByIdUser(user.id).then((channels) => {
+          channels.forEach((e) => {
+            socket.on(e.id + "message", onMessage);
+          });
+        });
+      };
+      channel();
 
       user.privateChannelList.forEach((e) => {
         socket.on(e.id + "privateMessage", onMessage);

@@ -42,21 +42,6 @@ export function ShowChannelList({ setReset }) {
 
   return (
     <div className={styles.container}>
-      {/* <ul>
-        {channels.map((c) => (
-          <li key={c.id}>
-            <span>{c.name}</span>
-            {!c.alreadyJoin && (
-              <button
-                className="btn btn-primary ml10"
-                onClick={() => onJoinChannel(c.id)}
-              >
-                Rejoindre
-              </button>
-            )}
-          </li>
-        ))}
-      </ul> */}
       {channels.map((c) => (
         <div key={c.id} className={styles.card}>
           <div className={styles.img}>

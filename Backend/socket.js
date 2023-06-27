@@ -43,7 +43,6 @@ function Socket(io) {
     });
 
     socket.on("addNewChannel", async (e) => {
-      console.log(e);
       await user.getUserById(socket.handshake.query.idUser);
       if (e.private) {
         addNewPrivateChannel(socket, e.channelId, user);
@@ -62,7 +61,6 @@ function Socket(io) {
   function addNewChannel(socket, channelId, user) {
     const message = new Message();
     socket.on(channelId + "message", async (e) => {
-      console.log(e)
       if (await message.add(e.message, user.id, false, e.idChannel, false)) {
         socket.emit(channelId + "message", {
           user: user,
@@ -78,8 +76,6 @@ function Socket(io) {
     });
 
     socket.on(channelId + "gif", async (e) => {
-      console.log(e)
-
       if (message.add(e.message, user.id, true, e.idChannel, false)) {
         socket.emit(channelId + "message", {
           user: user,
