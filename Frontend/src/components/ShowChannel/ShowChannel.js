@@ -15,6 +15,8 @@ export function ShowChannel({
   onShowMessages,
   idChannelActive,
   setIdChannelActive,
+  idPrivateChannelActive,
+  setIdPrivateChannelActive,
 }) {
   const { user } = useContext(AuthContext);
   const [channels, setChannels] = useState([]);
@@ -40,6 +42,7 @@ export function ShowChannel({
     chooseChannel(channel);
     onShowMessages(true);
     setIdChannelActive(channel.id);
+    setIdPrivateChannelActive(0);
   }
 
   async function onShowPrivateChannel() {
@@ -51,6 +54,8 @@ export function ShowChannel({
     try {
       const channel = await getPrivateChannel(user.id, userId);
       chooseChannel(channel);
+      setIdChannelActive(0);
+      setIdPrivateChannelActive(channel.id);
     } catch (error) {}
   }
 
@@ -106,7 +111,11 @@ export function ShowChannel({
                 )
               }
             >
-              <div className={styles.img}>
+              <div
+                className={`${styles.img} ${
+                  idPrivateChannelActive === channel.id && styles.active
+                }`}
+              >
                 <img
                   src={
                     channel.user.id === user.id
