@@ -10,10 +10,9 @@ export function ShowMessage({ channel, reset, setReset }) {
   const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
 
-  console.log(channel)
   useEffect(() => {
     const fetchMessage = async () => {
-      setMessages([])
+      setMessages([]);
       let messages;
       if (channel.privateMessage) {
         messages = await getMessageByIdChannel(channel.id, true);
@@ -24,7 +23,7 @@ export function ShowMessage({ channel, reset, setReset }) {
         setMessages((prev) => [
           ...prev,
           {
-            pseudo: message.user.pseudo,
+            user: message.user,
             message: message.message,
             gif: Boolean(message.gif),
             date: moment(message.creationDate).fromNow().toString(),
@@ -39,7 +38,7 @@ export function ShowMessage({ channel, reset, setReset }) {
       setMessages((prev) => [
         ...prev,
         {
-          pseudo: values.user.pseudo,
+          user: values.user,
           message: values.message,
           gif: Boolean(values.gif),
           date: date.toString(),
@@ -84,16 +83,20 @@ export function ShowMessage({ channel, reset, setReset }) {
         socket.off(e.id + "privateMessage", onMessage);
       });
     };
-
   }, [setMessages, channel, user, setReset, reset]);
 
   return (
     <ul>
       {messages.map((message, i) => (
         <li key={i} id={i + 1} className={`${styles.message}`}>
-          <div>
-            <span className={`${styles.pseudo}`}>{message.pseudo}</span>
-            <span className={`${styles.date} ml10`}>{message.date}</span>
+          <div className="d-flex">
+            <div className={styles.img}>
+              <img src={message.user.img} alt="" />
+            </div>
+            <div className="d-flex align-item-center ml10">
+              <span className={`${styles.pseudo}`}>{message.user.pseudo}</span>
+              <span className={`${styles.date} ml10`}>{message.date}</span>
+            </div>
           </div>
           {message.gif ? (
             <img className={styles.gif} src={message.message} alt="gif" />

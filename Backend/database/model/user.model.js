@@ -22,12 +22,12 @@ class User {
     };
   }
 
-  add(email, pseudo, password) {
+  add(email, pseudo, img, password) {
     return new Promise((resolve, reject) => {
       try {
         connection.query(
-          "INSERT INTO user (email, pseudo, password) VALUES (?,?,?)",
-          [email, pseudo, password],
+          "INSERT INTO user (email, pseudo, img, password) VALUES (?,?,?,?)",
+          [email, pseudo,img, password],
           (err, result) => {
             if (err) throw err;
             this.id = result.insertId;
@@ -52,6 +52,7 @@ class User {
               this.id = result[0].id;
               this.pseudo = result[0].pseudo;
               this.email = result[0].email;
+              this.img = result[0].img;
               this.password = result[0].password;
               this.connected = result[0].idSocket != "";
             } else {

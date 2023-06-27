@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
 import { CreateUser } from "../../../api/User";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function Register() {
   const [registerSuccess, setRegisterSuccess] = useState(false);
@@ -12,6 +12,7 @@ export function Register() {
   const validationSchema = yup.object({
     pseudo: yup.string().required("Pseudo must be entered"),
     email: yup.string().required("Email must be entered"),
+    img: yup.string().required("Url image must be entered"),
     password: yup.string().required("Password must be entered"),
     passwordConfirm: yup
       .string()
@@ -22,6 +23,7 @@ export function Register() {
   const initialValues = {
     pseudo: "",
     email: "",
+    img: "",
     password: "",
     passwordConfirm: "",
   };
@@ -73,6 +75,16 @@ export function Register() {
           />
         </div>
         <div className="d-flex">
+          <label htmlFor="img"></label>
+          <input
+            autoComplete="off"
+            type="text"
+            name="img"
+            placeholder="url image"
+            {...register("img")}
+          />
+        </div>
+        <div className="d-flex">
           <label htmlFor="password"></label>
           <input
             autoComplete="off"
@@ -98,6 +110,9 @@ export function Register() {
           )}
           {errors.email && (
             <li className={`${styles.errors}`}>{errors.email.message}</li>
+          )}
+          {errors.img && (
+            <li className={`${styles.errors}`}>{errors.img.message}</li>
           )}
           {errors.password && (
             <li className={`${styles.errors}`}>{errors.password.message}</li>

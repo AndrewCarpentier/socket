@@ -4,14 +4,14 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 
 router.post("/", async (req, res) => {
-  const { email, pseudo, password, passwordConfirm } = req.body;
+  const { email, pseudo, img, password, passwordConfirm } = req.body;
   const hashPassword = await bcrypt.hash(password, 10);
   console.log(email, pseudo, hashPassword)
   const user = new User();
   if (password === passwordConfirm) {
     if (!(await user.verifyIfMailAlreadyExist(email))) {
       if (!(await user.verifyIfPseudoAlreadyExist(pseudo))) {
-        if (await user.add(email, pseudo, hashPassword)) {
+        if (await user.add(email, pseudo, img, hashPassword)) {
           Channel.addUserInChannel(user.id, 1);
           res.json(true);
         } else {

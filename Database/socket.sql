@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 27 juin 2023 à 10:11
+-- Généré le : mar. 27 juin 2023 à 10:52
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -226,7 +226,8 @@ INSERT INTO `message` (`id`, `message`, `creationDate`, `gif`, `idUser`, `idChan
 (239, 'test', '2023-06-27 09:02:15', 0, 1, 4, 1),
 (240, 'test', '2023-06-27 09:03:46', 0, 1, 1, 0),
 (241, 'eez', '2023-06-27 09:08:13', 0, 11, 1, 0),
-(242, 'test', '2023-06-27 09:11:18', 0, 1, 6, 1);
+(242, 'test', '2023-06-27 09:11:18', 0, 1, 6, 1),
+(243, 'test', '2023-06-27 10:29:46', 0, 12, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -272,6 +273,7 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `pseudo` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `img` varchar(255) NOT NULL,
   `idSocket` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -279,17 +281,12 @@ CREATE TABLE `user` (
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id`, `email`, `pseudo`, `password`, `idSocket`) VALUES
-(1, 'test@test.fr', 'test', '$2b$10$4DYXf2jMelBy.xBiAEs.bubWh6rq/YZSN/pYPQ0fjOv6amAnns.3i', 'TG-DhAncIdqF9uFjAAAN'),
-(2, 'test2@test.fr', 'test', '$2b$10$vZ9tyJlfuYztzWYeQfoY1ur1ndE72DGBRVXv19gQLgsdN14qdoAG2', ''),
-(3, 'test3@test.fr', 'test', '$2b$10$iYd9CC0HK.HFM44flb/Uku/NRwBa/HIWbybVVgq.Jq2ErEPS/xRIq', ''),
-(5, 'test4@test.fr', 'test', '$2b$10$IGpl5YD8bc6hDQ69z3udv.YGJ7qEKgbXj8BzlFdQtiYpga0phe0Hu', ''),
-(6, 'andrew@gmail.com', 'andrew', '$2b$10$KDJdOeKAcLBu2uvWpoprZ.qHhyizblfcvxA9W2qyJbTJJzpuenfUO', ''),
-(7, 'g@g.f', 'guillaume', '$2b$10$UX7QaYvfTUp25.ZcyUBTye/ko7ESuS7nrKcWX3zeBqWFmGMytNUtO', ''),
-(8, 'tyra@tyra', 'Tyra', '$2b$10$Mt54cwOSAFUPz8In9MxuwOZjTGXZgNsc8kHEM.dFeOPM7Aj1VH.v6', ''),
-(9, 'test26@test', 'Stavy', '$2b$10$tQCFzFchtW9IEzgsRXJ/peVdagqk6lndEYVslwyorKK2frJh5g6dG', ''),
-(10, 'mail@mail.fr', 'pseudo', '$2b$10$aiDmZY8AjShgpk4n919BEOSxIBQpCAIeVIfyPgRSe4jlid/g4n95u', ''),
-(11, 'jesaispas@gmail.com', 'jesaispas', '$2b$10$ylERN8u8n71ldRTd6CeJvecNuOcpGtdm7au1wm6yIQ/nI9Lw7SRxK', '');
+INSERT INTO `user` (`id`, `email`, `pseudo`, `password`, `img`, `idSocket`) VALUES
+(1, 'test@test.fr', 'test', '$2b$10$4DYXf2jMelBy.xBiAEs.bubWh6rq/YZSN/pYPQ0fjOv6amAnns.3i', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFrulB6fJD8ypW94qO4gfj-qqxPtTjDznsZA&usqp=CAU', 'rG0DFY-rIuTpYdKkAAAN'),
+(2, 'test2@test.fr', 'test', '$2b$10$vZ9tyJlfuYztzWYeQfoY1ur1ndE72DGBRVXv19gQLgsdN14qdoAG2', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFrulB6fJD8ypW94qO4gfj-qqxPtTjDznsZA&usqp=CAU', ''),
+(3, 'test3@test.fr', 'test', '$2b$10$iYd9CC0HK.HFM44flb/Uku/NRwBa/HIWbybVVgq.Jq2ErEPS/xRIq', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFrulB6fJD8ypW94qO4gfj-qqxPtTjDznsZA&usqp=CAU', ''),
+(11, 'jesaispas@gmail.com', 'jesaispas', '$2b$10$ylERN8u8n71ldRTd6CeJvecNuOcpGtdm7au1wm6yIQ/nI9Lw7SRxK', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZwMOK_rWQpMmrx_KoW_8paYUkpc7f-EmakQ&usqp=CAU', ''),
+(12, 'andrew2@gmail.com', 'andr3w', '$2b$10$CGI6gH55w.VXtZ6fuovnR.U/6KAVjytBxADjgDr6g/bnvYRXzsKdm', 'https://www.google.fr/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png', '');
 
 -- --------------------------------------------------------
 
@@ -358,7 +355,8 @@ INSERT INTO `user_channel` (`id`, `idUser`, `idChannel`) VALUES
 (48, 2, 22),
 (49, 2, 24),
 (50, 11, 1),
-(51, 1, 30);
+(51, 1, 30),
+(52, 12, 1);
 
 --
 -- Index pour les tables déchargées
@@ -408,7 +406,7 @@ ALTER TABLE `channel`
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=243;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
 
 --
 -- AUTO_INCREMENT pour la table `private_channel`
@@ -420,13 +418,13 @@ ALTER TABLE `private_channel`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `user_channel`
 --
 ALTER TABLE `user_channel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
