@@ -47,11 +47,30 @@
         width: auto;
       }
     }
-
     .active{
       border-radius: 10px;
       border: 2px solid white;
     }
+    
+  }
+
+  .privateMessage{
+    margin-top: 50px;
+    font-size: 50px;
+    background-color: var(--gray-3200);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    transition: all 0.5s;
+    cursor: pointer;
+    &:hover{
+      border-radius: 10px;
+    }
+  }
+
+  .active{
+    border-radius: 10px;
+    border: 2px solid white;
   }
 
   .icon {
@@ -62,6 +81,8 @@
     margin-bottom: 150px;
   }
 }
+
+
 
 .container::-webkit-scrollbar {
   width: 10px;

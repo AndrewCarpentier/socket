@@ -1,5 +1,5 @@
 import styles from './App.module.scss';
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import { AuthProvider } from "./provider/AuthProvider";
 import './moment/fr';
 
@@ -9,6 +9,7 @@ function App() {
       <AuthProvider>
         <Outlet />
       </AuthProvider>
+      <ScrollRestoration />
     </div>
   );
 }

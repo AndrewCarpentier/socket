@@ -86,7 +86,7 @@ export function ShowMessage({ channel, reset, setReset }) {
   }, [setMessages, channel, user, setReset, reset]);
 
   return (
-    <ul>
+    <ul className={`${styles.container} d-flex justify-content-end`}>
       {messages.map((message, i) => (
         <li key={i} id={i + 1} className={`${styles.message}`}>
           <div className="d-flex">

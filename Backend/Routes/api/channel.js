@@ -16,6 +16,12 @@ router.get("/getChannelsByIdUser/:idUser", async (req, res) => {
   res.json(channels);
 });
 
+router.get("/getPrivateChannelsByIdUser/:idUser", async(req, res)=>{
+  const {idUser} = req.params;
+  const privateChannels = await Channel.getPrivateChannelsByIdUser(idUser);
+  res.json(privateChannels);
+})
+
 router.get("/getPrivateChannel/:idUser/:idUserSend", async (req, res) => {
   const { idUser, idUserSend } = req.params;
   if (idUser === idUserSend) {

@@ -73,7 +73,7 @@ class User {
           "SELECT * FROM private_channel WHERE idUser = ? OR idUser2 = ?",
           [id, id],
           (err, result) => {
-            if (err) throw err;
+            if (err) throw err; 
             this.privateChannelList = result;
             resolve(this);
           }

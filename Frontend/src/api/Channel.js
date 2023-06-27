@@ -1,6 +1,6 @@
 const API_CHANNEL = "http://localhost:8000/api/channel";
 
-export async function getChannels(){
+export async function getChannels() {
   const response = await fetch(`${API_CHANNEL}/all`);
   const responseBack = await response.json();
   if (response.ok) {
@@ -14,11 +14,11 @@ export async function getChannels(){
   }
 }
 
-export async function joinChannel(idUser, idChannel){
+export async function joinChannel(idUser, idChannel) {
   const response = await fetch(`${API_CHANNEL}/joinChannel`, {
-    method : "POST",
-    headers : { "Content-Type" : "application/json"},
-    body : JSON.stringify({idUser, idChannel})
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ idUser, idChannel }),
   });
   const responseBack = await response.json();
   if (response.ok) {
@@ -62,7 +62,23 @@ export async function getPrivateChannel(idUser, idUserSend) {
   }
 }
 
-export async function createChannel(name, img,idUser) {
+export async function getPrivateChannelsByIdUser(idUser) {
+  const response = await fetch(
+    `${API_CHANNEL}/getPrivateChannelsByIdUser/${idUser}`
+  );
+  const responseBack = await response.json();
+  if (response.ok) {
+    return responseBack;
+  } else {
+    if (responseBack) {
+      throw responseBack;
+    } else {
+      throw new Error("API error");
+    }
+  }
+}
+
+export async function createChannel(name, img, idUser) {
   const response = await fetch(`${API_CHANNEL}/create`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -70,7 +86,7 @@ export async function createChannel(name, img,idUser) {
   });
   const responseBack = await response.json();
   if (response.ok) {
-    console.log('ok')
+    console.log("ok");
     return responseBack;
   } else {
     if (responseBack) {

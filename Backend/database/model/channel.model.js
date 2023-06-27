@@ -1,4 +1,5 @@
 const connection = require("../index");
+const User = require("./user.model");
 
 class Channel {
   constructor() {
@@ -8,7 +9,7 @@ class Channel {
     this.privateMessage = null;
   }
 
-  static addChannel(name,img, idUser) {
+  static addChannel(name, img, idUser) {
     return new Promise((resolve, reject) => {
       try {
         connection.query(
@@ -17,12 +18,16 @@ class Channel {
           (err, result) => {
             if (err) throw err;
             const idChannel = result.insertId;
-            if(result.affectedRows === 1){
-              connection.query("INSERT INTO user_channel (idUser, idChannel) VALUES (?,?)", [idUser, idChannel], (err, result)=>{
-                if(err) throw err;
-                resolve(result.affectedRows === 1);
-              })
-            }else{
+            if (result.affectedRows === 1) {
+              connection.query(
+                "INSERT INTO user_channel (idUser, idChannel) VALUES (?,?)",
+                [idUser, idChannel],
+                (err, result) => {
+                  if (err) throw err;
+                  resolve(result.affectedRows === 1);
+                }
+              );
+            } else {
               resolve(false);
             }
           }
@@ -50,26 +55,26 @@ class Channel {
     });
   }
 
-  static verifyChannelExist(name){
-    return new Promise((resolve,reject)=>{
+  static verifyChannelExist(name) {
+    return new Promise((resolve, reject) => {
       try {
-        connection.query("SELECT * FROM channel", (err, result)=>{
-          if(err) throw err;
-          if(result.length > 0){
-            result.forEach(e => {
-              if(e.name.toLowerCase() === name.toLowerCase()){
+        connection.query("SELECT * FROM channel", (err, result) => {
+          if (err) throw err;
+          if (result.length > 0) {
+            result.forEach((e) => {
+              if (e.name.toLowerCase() === name.toLowerCase()) {
                 resolve(true);
               }
             });
             resolve(false);
-          }else{
+          } else {
             resolve(false);
           }
-        })
+        });
       } catch (error) {
-        reject("API error")
+        reject("API error");
       }
-    })
+    });
   }
 
   static verifyPrivateMessageChannelExist(idUser, idUser2) {
@@ -90,7 +95,7 @@ class Channel {
           [idUser2, idUser],
           (err, result) => {
             if (err) throw err;
-            resolve(result.length > 0)
+            resolve(result.length > 0);
           }
         );
       } catch (error) {
@@ -125,19 +130,41 @@ class Channel {
         connection.query(
           "SELECT c.* FROM channel c INNER JOIN user_channel uc ON uc.idChannel = c.id WHERE uc.idUser = ?",
           [idUser],
-          async(err, result) => {
+          async (err, result) => {
             if (err) throw err;
-            if(result.length > 0){
+            if (result.length > 0) {
               await Promise.all(
-                result.map(async (e)=> {
+                result.map(async (e) => {
                   e.privateMessage = false;
                   return e;
                 })
-              )
+              );
             }
             resolve(result);
           }
         );
+      } catch (error) {
+        reject("API error");
+      }
+    });
+  }
+
+  static getPrivateChannelsByIdUser(idUser) {
+    return new Promise((resolve, reject) => {
+      try {
+        connection.query("SELECT * FROM private_channel WHERE idUser = ? OR idUser2 = ?", [idUser, idUser], async(err, result)=>{
+          if(err) throw err;
+          await Promise.all(
+            result.map(async(e) => {
+              e.user = await User.getUserByIdStatic(e.idUser);
+              e.user2 = await User.getUserByIdStatic(e.idUser2);
+              delete e.idUser;
+              delete e.idUser2;
+              return e;
+            })
+          )
+          resolve(result)
+        })
       } catch (error) {
         reject("API error");
       }
@@ -178,30 +205,34 @@ class Channel {
     });
   }
 
-  static getChannels(){
-    return new Promise((resolve, reject)=>{
+  static getChannels() {
+    return new Promise((resolve, reject) => {
       try {
-        connection.query("SELECT * FROM channel", (err, result)=>{
-          if(err) throw err;
+        connection.query("SELECT * FROM channel", (err, result) => {
+          if (err) throw err;
           resolve(result);
-        })
-      } catch (error) {
-        reject('API error')
-      }
-    })
-  }
-
-  static joinChannel(idUser, idChannel){
-    return new Promise((resolve, reject)=>{
-      try {
-        connection.query("INSERT INTO user_channel (idUser, idChannel) VALUES (?,?)", [idUser, idChannel], (err, result)=>{
-          if(err) throw err;
-          resolve(result.affectedRows === 1);
-        })
+        });
       } catch (error) {
         reject("API error");
       }
-    })
+    });
+  }
+
+  static joinChannel(idUser, idChannel) {
+    return new Promise((resolve, reject) => {
+      try {
+        connection.query(
+          "INSERT INTO user_channel (idUser, idChannel) VALUES (?,?)",
+          [idUser, idChannel],
+          (err, result) => {
+            if (err) throw err;
+            resolve(result.affectedRows === 1);
+          }
+        );
+      } catch (error) {
+        reject("API error");
+      }
+    });
   }
 
   static addUserInChannel(idUser, idChannel) {
