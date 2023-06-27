@@ -40,21 +40,21 @@ router.get("/getPrivateChannel/:idUser/:idUserSend", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-  const { name, idUser } = req.body;
+  const { name, img, idUser } = req.body;
   if (await Channel.verifyChannelExist(name)) {
     res.status(400).json("This channel name already exist");
   } else {
-    res.json(await Channel.addChannel(name, idUser));
+    res.json(await Channel.addChannel(name, img, idUser));
   }
 });
 
-router.get('/all', async(req,res)=>{
+router.get("/all", async (req, res) => {
   res.json(await Channel.getChannels());
-})
+});
 
-router.post('/joinChannel', async(req, res)=>{
-  const {idUser, idChannel} = req.body;
+router.post("/joinChannel", async (req, res) => {
+  const { idUser, idChannel } = req.body;
   res.json(await Channel.joinChannel(idUser, idChannel));
-})
+});
 
 module.exports = router;

@@ -12,10 +12,12 @@ export function AddChannel({ onShowAddChannel, resetChannel }) {
 
   const validationSchema = yup.object({
     name: yup.string().required(),
+    img: yup.string().required(),
   });
 
   const initialValues = {
     name: "",
+    img: "",
   };
 
   const {
@@ -29,10 +31,10 @@ export function AddChannel({ onShowAddChannel, resetChannel }) {
   const submit = handleSubmit(async (values) => {
     try {
       clearErrors();
-      if (await createChannel(values.name, user.id)) {
+      if (await createChannel(values.name, values.img, user.id)) {
         onShowAddChannel(false);
         resetChannel(true);
-        socket.emit('resetChannel', "")
+        socket.emit("resetChannel", "");
         getCurrent();
       }
     } catch (message) {
@@ -50,11 +52,16 @@ export function AddChannel({ onShowAddChannel, resetChannel }) {
     <div className={styles.container}>
       <h2>Ajouter un serveur</h2>
       <form onSubmit={submit} className="m10">
-        <input
-          id="nameOnAddChannel"
-          placeholder="nom du serveur"
-          {...register("name")}
-        />
+        <div>
+          <input
+            id="nameOnAddChannel"
+            placeholder="nom du serveur"
+            {...register("name")}
+          />
+        </div>
+        <div>
+          <input placeholder="url image" {...register("img")} className="mt20 mb20" />
+        </div>
         <button
           className="btn btn-primary-reverse ml10 mr10"
           type="button"

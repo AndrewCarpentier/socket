@@ -4,6 +4,8 @@
   width: 150px;
   height: 100vh;
   overflow: auto;
+  position: sticky;
+  top: 50px;
   @media only screen and (max-width: 600px) {
     position: absolute;
     width: 100%;
@@ -13,12 +15,42 @@
   h2 {
     text-align: center;
   }
+  ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   li {
     padding: 10px;
     &:hover {
       color: var(--gray-1800);
       cursor: pointer;
+    }
+    text-align: center;    
+    .img{
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      height: 100px;
+      width: 100px;
+      border-radius: 50%;
+      transition: all 0.5s;
+      &:hover{
+        border-radius: 10px;
+      }
+      img{
+        height: 100%;
+        width: auto;
+      }
+    }
+
+    .active{
+      border-radius: 10px;
+      border: 2px solid white;
     }
   }
 
@@ -27,7 +59,7 @@
   }
 
   .compass {
-    margin-bottom: 100px;
+    margin-bottom: 150px;
   }
 }
 

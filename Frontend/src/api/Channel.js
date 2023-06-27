@@ -62,11 +62,11 @@ export async function getPrivateChannel(idUser, idUserSend) {
   }
 }
 
-export async function createChannel(name, idUser) {
+export async function createChannel(name, img,idUser) {
   const response = await fetch(`${API_CHANNEL}/create`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, idUser }),
+    body: JSON.stringify({ name, img, idUser }),
   });
   const responseBack = await response.json();
   if (response.ok) {

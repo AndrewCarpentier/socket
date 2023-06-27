@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 26 juin 2023 à 20:24
+-- Généré le : mar. 27 juin 2023 à 10:11
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `channel` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `img` varchar(255) NOT NULL,
   `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -37,11 +38,15 @@ CREATE TABLE `channel` (
 -- Déchargement des données de la table `channel`
 --
 
-INSERT INTO `channel` (`id`, `name`, `idUser`) VALUES
-(1, 'CDA23', 1),
-(2, 'test', 1),
-(3, 'test2', 1),
-(38, 'kxso', 1);
+INSERT INTO `channel` (`id`, `name`, `img`, `idUser`) VALUES
+(1, 'CDA23', 'https://mywowo.net/media/images/cache/dubai_img_worlds_of_adventure_01_presentazione_jpg_1200_630_cover_85.jpg', 1),
+(2, 'test', 'https://images.prismic.io/mystique/5d7c09b9-40e5-4254-ae1c-2c1cb59aa898_IMG3.jpg?auto=compress,format', 1),
+(3, 'test2', 'https://mywowo.net/media/images/cache/dubai_img_worlds_of_adventure_01_presentazione_jpg_1200_630_cover_85.jpg', 1),
+(8, 'test3', 'https://images.prismic.io/mystique/5d7c09b9-40e5-4254-ae1c-2c1cb59aa898_IMG3.jpg?auto=compress,format', 1),
+(11, 'test4', 'https://mywowo.net/media/images/cache/dubai_img_worlds_of_adventure_01_presentazione_jpg_1200_630_cover_85.jpg', 1),
+(13, 'test5', 'https://mywowo.net/media/images/cache/dubai_img_worlds_of_adventure_01_presentazione_jpg_1200_630_cover_85.jpg', 1),
+(14, 'test6', 'https://mywowo.net/media/images/cache/dubai_img_worlds_of_adventure_01_presentazione_jpg_1200_630_cover_85.jpg', 1),
+(30, 'zen', 'https://images.unsplash.com/photo-1508919801845-fc2ae1bc2a28?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1nfGVufDB8fDB8fHww&w=1000&q=80', 1);
 
 -- --------------------------------------------------------
 
@@ -136,14 +141,92 @@ INSERT INTO `message` (`id`, `message`, `creationDate`, `gif`, `idUser`, `idChan
 (154, 'https://media.tenor.com/93e_69nL7JYAAAAC/clap.gif', '2023-06-12 16:11:33', 1, 2, 1, 0),
 (155, 'https://media.tenor.com/XUAONVsG6qIAAAAC/leonardo-dicaprio-clapping.gif', '2023-06-12 16:12:44', 1, 2, 2, 1),
 (156, 'https://media.tenor.com/eakdFd6OoHcAAAAC/frickin-awesome.gif', '2023-06-12 16:12:55', 1, 2, 1, 0),
-(157, 'fdsqfds', '2023-06-15 01:49:14', 0, 1, 4, 0),
-(158, 'ad', '2023-06-26 14:50:59', 0, 1, 6, 1),
-(159, 'test', '2023-06-26 14:51:01', 0, 1, 6, 1),
-(160, 'test', '2023-06-26 14:54:44', 0, 6, 1, 0),
-(161, 'tst', '2023-06-26 17:20:11', 0, 6, 6, 1),
-(162, 'sd', '2023-06-26 17:20:44', 0, 6, 11, 1),
-(163, 'andrew', '2023-06-26 17:31:32', 0, 1, 6, 1),
-(164, 'test', '2023-06-26 18:46:00', 0, 1, 1, 0);
+(157, 'test', '2023-06-13 10:35:19', 0, 1, 16, 0),
+(158, 'dsqdq', '2023-06-13 10:37:05', 0, 1, 15, 0),
+(159, 'dqdq', '2023-06-13 10:37:12', 0, 1, 19, 0),
+(160, 'test', '2023-06-13 10:48:24', 0, 1, 8, 1),
+(161, 'test', '2023-06-13 10:59:04', 0, 1, 25, 0),
+(162, 'test', '2023-06-13 10:59:21', 0, 1, 26, 0),
+(163, 'qq', '2023-06-13 10:59:26', 0, 1, 26, 0),
+(164, 'test', '2023-06-13 11:03:19', 0, 1, 27, 0),
+(165, 'test', '2023-06-13 11:06:26', 0, 10, 10, 1),
+(166, 'test', '2023-06-15 09:00:29', 0, 2, 9, 1),
+(167, 'test', '2023-06-15 09:00:29', 0, 2, 9, 1),
+(168, 'test', '2023-06-15 09:00:29', 0, 2, 9, 1),
+(169, 'test', '2023-06-15 09:00:29', 0, 2, 9, 1),
+(170, 'a', '2023-06-15 09:00:34', 0, 2, 9, 1),
+(171, 'a', '2023-06-15 09:00:34', 0, 2, 9, 1),
+(172, 'a', '2023-06-15 09:00:34', 0, 2, 9, 1),
+(173, 'a', '2023-06-15 09:00:34', 0, 2, 9, 1),
+(174, 'h', '2023-06-15 09:00:44', 0, 2, 9, 1),
+(175, 'h', '2023-06-15 09:00:44', 0, 2, 9, 1),
+(176, 'fd', '2023-06-15 09:00:49', 0, 2, 1, 0),
+(177, 'fd', '2023-06-15 09:00:49', 0, 2, 1, 0),
+(178, 'g', '2023-06-15 09:00:56', 0, 2, 1, 0),
+(179, 'a', '2023-06-15 09:00:59', 0, 2, 1, 0),
+(180, 'dqsdq', '2023-06-15 09:01:02', 0, 2, 23, 0),
+(181, 'test', '2023-06-15 09:01:09', 0, 2, 2, 1),
+(182, 'test', '2023-06-15 09:01:09', 0, 2, 2, 1),
+(183, 'test', '2023-06-15 09:01:14', 0, 2, 23, 0),
+(184, 'test', '2023-06-15 09:01:14', 0, 2, 23, 0),
+(185, 'a', '2023-06-15 09:02:00', 0, 2, 1, 0),
+(186, 'a', '2023-06-15 09:02:00', 0, 2, 1, 0),
+(187, 'a', '2023-06-15 09:03:27', 0, 2, 1, 0),
+(188, 'andrew', '2023-06-15 09:03:32', 0, 2, 2, 1),
+(189, 'test', '2023-06-15 10:11:10', 0, 2, 11, 0),
+(190, 'test', '2023-06-15 10:11:15', 0, 2, 2, 1),
+(191, 'dsqdsq', '2023-06-15 10:11:20', 0, 2, 11, 0),
+(192, 'dada', '2023-06-15 10:11:26', 0, 2, 2, 1),
+(193, 'daa', '2023-06-15 10:11:30', 0, 2, 1, 0),
+(194, 'da', '2023-06-15 10:11:41', 0, 2, 1, 0),
+(195, 'da', '2023-06-15 10:11:41', 0, 2, 1, 0),
+(196, 'a', '2023-06-15 10:13:44', 0, 2, 1, 0),
+(197, 'fsdfs', '2023-06-15 10:13:54', 0, 2, 1, 0),
+(198, 'fsdfs', '2023-06-15 10:13:54', 0, 2, 1, 0),
+(199, 'dsdq', '2023-06-15 10:14:16', 0, 2, 1, 0),
+(200, 'gf', '2023-06-15 10:14:24', 0, 2, 1, 0),
+(201, 'fdsfsd', '2023-06-15 10:14:58', 0, 2, 1, 0),
+(202, 'https://media.tenor.com/Aind6W80t_4AAAAC/cat-kitty.gif', '2023-06-15 10:25:44', 1, 2, 2, 0),
+(203, 'https://media.tenor.com/4DPkcnxDPHYAAAAC/oh-wow.gif', '2023-06-15 10:26:42', 1, 2, 16, 0),
+(204, 'test', '2023-06-15 11:06:44', 0, 2, 27, 0),
+(205, 'dsqdsq', '2023-06-15 11:06:47', 0, 2, 27, 0),
+(206, 'test', '2023-06-15 11:15:31', 0, 2, 12, 1),
+(207, 'test', '2023-06-15 11:16:24', 0, 2, 13, 1),
+(208, 'test', '2023-06-15 11:16:24', 0, 2, 13, 1),
+(209, 'a', '2023-06-15 11:16:33', 0, 2, 1, 0),
+(210, 'h', '2023-06-15 11:16:40', 0, 2, 13, 1),
+(211, 'h', '2023-06-15 11:16:40', 0, 2, 13, 1),
+(212, 'h', '2023-06-15 11:16:40', 0, 2, 13, 1),
+(213, 'test', '2023-06-15 11:21:10', 0, 2, 13, 1),
+(214, 'test', '2023-06-15 11:21:10', 0, 2, 13, 1),
+(215, 'test', '2023-06-15 11:21:30', 0, 2, 13, 1),
+(216, 'test', '2023-06-15 11:21:30', 0, 2, 13, 1),
+(217, 'a', '2023-06-15 11:21:45', 0, 2, 13, 1),
+(218, 'test', '2023-06-15 11:23:07', 0, 2, 13, 1),
+(219, 'test', '2023-06-15 11:23:07', 0, 2, 13, 1),
+(220, 'a', '2023-06-15 11:23:12', 0, 2, 1, 0),
+(221, 'test', '2023-06-15 11:24:34', 0, 2, 13, 1),
+(222, 'test', '2023-06-15 11:24:42', 0, 2, 15, 1),
+(223, 'test', '2023-06-15 11:24:54', 0, 2, 17, 0),
+(224, 'dsqdsq', '2023-06-15 11:24:57', 0, 2, 17, 0),
+(225, 'andrew', '2023-06-15 11:25:05', 0, 2, 29, 0),
+(226, 'dsq', '2023-06-15 11:26:56', 0, 2, 1, 0),
+(227, 'dsq', '2023-06-15 11:26:59', 0, 2, 12, 1),
+(228, 'dsq', '2023-06-15 11:27:04', 0, 2, 11, 1),
+(229, 'dsqdq', '2023-06-15 11:27:12', 0, 2, 21, 0),
+(230, 'dsq', '2023-06-15 11:48:32', 0, 2, 1, 0),
+(231, 'dsq', '2023-06-15 11:48:37', 0, 2, 16, 1),
+(232, 'dsd', '2023-06-15 11:48:42', 0, 2, 2, 1),
+(233, 'dqsdq', '2023-06-15 11:48:48', 0, 2, 18, 0),
+(234, 'eae', '2023-06-15 11:48:52', 0, 2, 18, 0),
+(235, 'aa', '2023-06-15 11:48:57', 0, 2, 18, 0),
+(236, 'test', '2023-06-15 11:49:03', 0, 2, 20, 0),
+(237, 'test', '2023-06-15 11:52:53', 0, 2, 22, 0),
+(238, 'test', '2023-06-15 11:59:44', 0, 2, 24, 0),
+(239, 'test', '2023-06-27 09:02:15', 0, 1, 4, 1),
+(240, 'test', '2023-06-27 09:03:46', 0, 1, 1, 0),
+(241, 'eez', '2023-06-27 09:08:13', 0, 11, 1, 0),
+(242, 'test', '2023-06-27 09:11:18', 0, 1, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -168,10 +251,15 @@ INSERT INTO `private_channel` (`id`, `idUser`, `idUser2`) VALUES
 (5, 1, 7),
 (6, 1, 6),
 (7, 1, 8),
-(8, 6, 3),
-(9, 6, 5),
-(10, 1, 9),
-(11, 6, 9);
+(8, 1, 10),
+(9, 10, 2),
+(10, 10, 7),
+(11, 2, 8),
+(12, 2, 6),
+(13, 2, 7),
+(14, 2, 5),
+(15, 2, 9),
+(16, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -192,14 +280,16 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `pseudo`, `password`, `idSocket`) VALUES
-(1, 'test@test.fr', 'test', '$2b$10$4DYXf2jMelBy.xBiAEs.bubWh6rq/YZSN/pYPQ0fjOv6amAnns.3i', ''),
-(2, 'test2@test.fr', 'test2', '$2b$10$vZ9tyJlfuYztzWYeQfoY1ur1ndE72DGBRVXv19gQLgsdN14qdoAG2', ''),
-(3, 'test3@test.fr', 'test3', '$2b$10$iYd9CC0HK.HFM44flb/Uku/NRwBa/HIWbybVVgq.Jq2ErEPS/xRIq', ''),
-(5, 'test4@test.fr', 'test4', '$2b$10$IGpl5YD8bc6hDQ69z3udv.YGJ7qEKgbXj8BzlFdQtiYpga0phe0Hu', ''),
+(1, 'test@test.fr', 'test', '$2b$10$4DYXf2jMelBy.xBiAEs.bubWh6rq/YZSN/pYPQ0fjOv6amAnns.3i', 'TG-DhAncIdqF9uFjAAAN'),
+(2, 'test2@test.fr', 'test', '$2b$10$vZ9tyJlfuYztzWYeQfoY1ur1ndE72DGBRVXv19gQLgsdN14qdoAG2', ''),
+(3, 'test3@test.fr', 'test', '$2b$10$iYd9CC0HK.HFM44flb/Uku/NRwBa/HIWbybVVgq.Jq2ErEPS/xRIq', ''),
+(5, 'test4@test.fr', 'test', '$2b$10$IGpl5YD8bc6hDQ69z3udv.YGJ7qEKgbXj8BzlFdQtiYpga0phe0Hu', ''),
 (6, 'andrew@gmail.com', 'andrew', '$2b$10$KDJdOeKAcLBu2uvWpoprZ.qHhyizblfcvxA9W2qyJbTJJzpuenfUO', ''),
 (7, 'g@g.f', 'guillaume', '$2b$10$UX7QaYvfTUp25.ZcyUBTye/ko7ESuS7nrKcWX3zeBqWFmGMytNUtO', ''),
 (8, 'tyra@tyra', 'Tyra', '$2b$10$Mt54cwOSAFUPz8In9MxuwOZjTGXZgNsc8kHEM.dFeOPM7Aj1VH.v6', ''),
-(9, 'test26@test', 'Stavy', '$2b$10$tQCFzFchtW9IEzgsRXJ/peVdagqk6lndEYVslwyorKK2frJh5g6dG', '');
+(9, 'test26@test', 'Stavy', '$2b$10$tQCFzFchtW9IEzgsRXJ/peVdagqk6lndEYVslwyorKK2frJh5g6dG', ''),
+(10, 'mail@mail.fr', 'pseudo', '$2b$10$aiDmZY8AjShgpk4n919BEOSxIBQpCAIeVIfyPgRSe4jlid/g4n95u', ''),
+(11, 'jesaispas@gmail.com', 'jesaispas', '$2b$10$ylERN8u8n71ldRTd6CeJvecNuOcpGtdm7au1wm6yIQ/nI9Lw7SRxK', '');
 
 -- --------------------------------------------------------
 
@@ -219,6 +309,7 @@ CREATE TABLE `user_channel` (
 
 INSERT INTO `user_channel` (`id`, `idUser`, `idChannel`) VALUES
 (1, 1, 1),
+(2, 2, 1),
 (3, 3, 1),
 (4, 5, 1),
 (5, 6, 1),
@@ -227,27 +318,47 @@ INSERT INTO `user_channel` (`id`, `idUser`, `idChannel`) VALUES
 (8, 9, 1),
 (9, 1, 2),
 (10, 1, 3),
-(11, 1, 4),
-(12, 1, 5),
-(13, 1, 6),
-(14, 1, 10),
-(15, 1, 8),
-(16, 1, 9),
-(17, 1, 11),
-(18, 1, 12),
-(19, 1, 13),
-(20, 1, 14),
-(21, 1, 15),
-(22, 1, 16),
-(23, 1, 17),
-(24, 1, 18),
-(25, 1, 19),
-(26, 1, 20),
-(27, 1, 21),
-(28, 1, 22),
-(29, 1, 23),
-(30, 1, 24),
-(31, 1, 38);
+(11, 10, 1),
+(12, 1, 11),
+(13, 1, 12),
+(14, 1, 13),
+(15, 1, 14),
+(16, 1, 15),
+(17, 1, 16),
+(18, 1, 17),
+(19, 1, 18),
+(20, 1, 19),
+(21, 1, 20),
+(22, 1, 21),
+(23, 1, 22),
+(24, 1, 23),
+(25, 1, 24),
+(26, 1, 25),
+(27, 1, 26),
+(28, 1, 27),
+(29, 1, 8),
+(30, 1, 28),
+(31, 1, 29),
+(32, 2, 23),
+(33, 2, 11),
+(34, 2, 3),
+(35, 2, 19),
+(36, 2, 13),
+(37, 2, 8),
+(38, 2, 14),
+(39, 2, 2),
+(40, 2, 15),
+(41, 2, 16),
+(42, 2, 27),
+(43, 2, 17),
+(44, 2, 29),
+(45, 2, 21),
+(46, 2, 18),
+(47, 2, 20),
+(48, 2, 22),
+(49, 2, 24),
+(50, 11, 1),
+(51, 1, 30);
 
 --
 -- Index pour les tables déchargées
@@ -291,31 +402,31 @@ ALTER TABLE `user_channel`
 -- AUTO_INCREMENT pour la table `channel`
 --
 ALTER TABLE `channel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=243;
 
 --
 -- AUTO_INCREMENT pour la table `private_channel`
 --
 ALTER TABLE `private_channel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `user_channel`
 --
 ALTER TABLE `user_channel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

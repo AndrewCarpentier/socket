@@ -20,6 +20,7 @@ export function Message() {
   const [resetNewChannel, setResetNewChannel] = useState(false);
   const [showUserList, setShowUserList] = useState(true);
   const [showChannelList, setShowChannelList] = useState(true);
+  const [idChannelActive, setIdChannelActive] = useState(0);
 
   useEffect(() => {
     if (user) {
@@ -70,6 +71,8 @@ export function Message() {
             chooseChannel={setChannel}
             onShowAddChannel={onShowAddChannel}
             onShowMessages={setShowMessages}
+            setIdChannelActive={setIdChannelActive}
+            idChannelActive={idChannelActive}
           />
         )}
       </div>

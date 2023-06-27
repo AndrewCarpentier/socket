@@ -8,12 +8,12 @@ class Channel {
     this.privateMessage = null;
   }
 
-  static addChannel(name, idUser) {
+  static addChannel(name,img, idUser) {
     return new Promise((resolve, reject) => {
       try {
         connection.query(
-          "INSERT INTO channel (name, idUser) VALUES (?, ?)",
-          [name, idUser],
+          "INSERT INTO channel (name, img, idUser) VALUES (?,?,?)",
+          [name, img, idUser],
           (err, result) => {
             if (err) throw err;
             const idChannel = result.insertId;

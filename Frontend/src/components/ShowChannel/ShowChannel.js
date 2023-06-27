@@ -2,7 +2,6 @@ import styles from "./ShowChannel.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { getChannelsByIdUser } from "../../api/Channel";
-import { getUserById } from "../../api/User";
 
 export function ShowChannel({
   chooseChannel,
@@ -10,10 +9,11 @@ export function ShowChannel({
   reset,
   setReset,
   onShowMessages,
+  idChannelActive,
+  setIdChannelActive
 }) {
   const { user } = useContext(AuthContext);
   const [channels, setChannels] = useState([]);
-  const [publicList, setPublicList] = useState(true);
 
   useEffect(() => {
     const fetchChannels = async () => {
@@ -33,20 +33,7 @@ export function ShowChannel({
   function onChooseChannel(channel) {
     chooseChannel(channel);
     onShowMessages(true);
-  }
-
-  function onPublicClick() {
-    setPublicList(true);
-  }
-
-  function onPrivateClick() {
-    setPublicList(false);
-  }
-
-  async function getUser(id) {
-    const x = await getUserById(id);
-    console.log(x);
-    return await x.id.toString();
+    setIdChannelActive(channel.id);
   }
 
   return (
@@ -54,7 +41,10 @@ export function ShowChannel({
       <ul>
         {channels.map((channel) => (
           <li key={channel.id} onClick={() => onChooseChannel(channel)}>
-            {channel.name}
+            <div className={`${styles.img} ${idChannelActive === channel.id && styles.active}`}>
+              <img src={channel.img} alt="img" />
+            </div>
+            <div>{channel.name}</div>
           </li>
         ))}
         <li
