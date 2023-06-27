@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { getChannels, joinChannel } from "../../api/Channel";
 import { socket } from "../../socket";
 
-export function ShowChannelList({setReset}) {
+export function ShowChannelList({ setReset }) {
   const { user, getCurrent } = useContext(AuthContext);
   const [channels, setChannels] = useState([]);
 
@@ -26,23 +26,23 @@ export function ShowChannelList({setReset}) {
 
   async function onJoinChannel(idChannel) {
     if (joinChannel(user.id, idChannel)) {
-      socket.emit('addNewChannel', {private : false, channelId : idChannel})
+      socket.emit("addNewChannel", { private: false, channelId: idChannel });
       await getCurrent();
       const tab = [];
-      channels.forEach(c => {
-        if(c.alreadyJoin !== true){
+      channels.forEach((c) => {
+        if (c.alreadyJoin !== true) {
           c.alreadyJoin = c.id === idChannel;
         }
-        tab.push(c)
-      })
+        tab.push(c);
+      });
       setChannels(tab);
-      setReset(true)
+      setReset(true);
     }
   }
 
   return (
     <div className={styles.container}>
-      <ul>
+      {/* <ul>
         {channels.map((c) => (
           <li key={c.id}>
             <span>{c.name}</span>
@@ -56,7 +56,23 @@ export function ShowChannelList({setReset}) {
             )}
           </li>
         ))}
-      </ul>
+      </ul> */}
+      {channels.map((c) => (
+        <div key={c.id} className={styles.card}>
+          <div className={styles.img}>
+            <img src={c.img} alt="" />
+          </div>
+          <div>{c.name}</div>
+          {!c.alreadyJoin && (
+            <button
+              className="btn btn-primary ml10"
+              onClick={() => onJoinChannel(c.id)}
+            >
+              Rejoindre
+            </button>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

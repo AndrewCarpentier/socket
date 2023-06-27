@@ -1,3 +1,26 @@
-.container{
-    color: var(--white);
+.container {
+  color: var(--white);
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-content: flex-start;
+  .card {
+    height: 200px;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      height: 100px;
+      width: 100px;
+      img {
+        height: 100%;
+        width: auto;
+      }
+    }
+  }
 }
